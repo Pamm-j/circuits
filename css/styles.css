@@ -1,0 +1,32 @@
+.info {
+  margin-top: 20px;
+  width: 800px;
+  height: 110px;
+  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+  display: flex;
+  justify-content: space-between;
+}
+
+.info div {
+  color: white;
+  margin: 5px;
+  width: 200px;
+  height: 100px;
+  background-color: black;
+}
+
+#work-bench {
+  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+}
+
+.title {
+  font-size: 100px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}

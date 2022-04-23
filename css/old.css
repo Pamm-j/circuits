@@ -1,0 +1,44 @@
+
+
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 936px;
+  height: 416px;
+  /* background-color: brown; */
+  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+}
+
+.grid div {
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+}
+
+.node {
+  background-color: orange;
+}
+
+.info {
+  margin-top: 20px;
+  width: 936px;
+  height: 150px;
+  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+  display: flex;
+  justify-content: space-between;
+}
+
+.info div {
+  color: white;
+  margin: 5px;
+  width: 200px;
+  height: 140px;
+  background-color: black;
+}
+/* 
+.wire{
+  height: 30px;
+  background-color: orange;
+  margin-top: 20px;
+} */
