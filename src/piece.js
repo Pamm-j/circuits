@@ -4,16 +4,14 @@ import * as Pieces from "./pieces"
 
 
 export default class Piece {
-  constructor (ctx) {
+  constructor () {
     this.x = 2
     this.y = 2 
-    this.type = "C"
-    this.rotation = 1
-    this.ctx = ctx
+    this.type = "B"
+    this.rotation = 0
   }
 
-  rotate(ctx) {
-    this.clearCell(ctx)
+  rotate() {
     this.rotation++ 
     if (this.type === "C") {
       if (this.rotation > 4) {
@@ -24,39 +22,35 @@ export default class Piece {
     }
   }
 
-  moveUp(ctx) {
+  moveUp() {
     if (this.validYPos(this.y - 1)) {
     this.y -= 1;
     }
   }
 
-  moveDown(ctx) {
+  moveDown() {
     if (this.validYPos(this.y + 1)) {
     this.y += 1;
     }
   }
 
-  moveLeft(ctx) {
+  moveLeft() {
     if (this.validXPos(this.x - 1)) {
       this.x -= 1;
     }
   }
 
-  moveRight(ctx) {
+  moveRight() {
     if (this.validXPos(this.x + 1)) {
       this.x += 1;
     }
   }
 
-  clearCell(ctx) {
-    ctx.clearRect(this.x * Util.SIZE, this.y * Util.SIZE, Util.SIZE, Util.SIZE)
-  }
-
   validXPos(n) {
-    return n < Util.ROW && n >= 0;
+    return n < Util.ROW - 1 && n > 0;
   }
 
   validYPos(n) {
-    return n < Util.COL && n >= 0;
+    return n < Util.COL - 1 && n > 0;
  }
 }
