@@ -1,12 +1,7 @@
 import * as Util from "./util"
+import * as Pieces from "./pieces"
 // import * as Types from "./types"
-const PIECES = {
-  corner: [
-          [0, 0, 0],
-          [0, 1, 0],
-          [0, 0, 0]
-        ]
-}
+
 
 export default class Piece {
   constructor (ctx) {
