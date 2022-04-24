@@ -1,7 +1,7 @@
 import Board from "./board"
 import Piece from "./piece"
 import * as Util from "./util"
-
+let board = {};
 export default class Circuits {
   constructor(canvas){
     this.ctx = canvas.getContext("2d");
@@ -11,23 +11,31 @@ export default class Circuits {
   }
 
   action(e) {
-    if (e.keyCode === 37) {
-      this.board.currentPiece.moveLeft()
-    } else if (e.keyCode === 38) {
-      this.board.currentPiece.rotate()
-    } else if (e.keyCode === 39) {
-      this.board.currentPiece.moveRight()
-    } else if (e.keyCode === 40) {
-      this.board.currentPiece.moveUp()
-    } else if (e.keyCode === 32) {
-      this.board.currentPiece.rotate()
+    if (e.keyCode === 90) {
+      board.placePiece()
+      board.drawPlacedPieces()
+      // console.table(board.grid);
+    } else {
+      board.clearCell(board.currentPiece.x, board.currentPiece.y)
+      board.drawPlacedPieces()
+      if (e.keyCode === 37) {
+        board.currentPiece.moveLeft(board.ctx)
+        board.drawCurrentPiece()
+      } else if (e.keyCode === 38) {
+        board.currentPiece.moveUp(board.ctx)
+      } else if (e.keyCode === 39) {
+        board.currentPiece.moveRight(board.ctx)
+      } else if (e.keyCode === 40) {
+        board.currentPiece.moveDown(board.ctx)
+      } else if (e.keyCode === 32) {
+        board.currentPiece.rotate(board.ctx)
+      }
+      board.drawCurrentPiece()
     }
   }
 
   start() {
-    this.board = new Board(this.ctx)
-    console.table(this.board.grid);
-    // setTimeout(this.board.grid.currentPiece.moveUp(this.ctx), 1000)
+    board = new Board(this.ctx)
   }
 
 }

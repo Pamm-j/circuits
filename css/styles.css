@@ -1,6 +1,6 @@
 .info {
   margin-top: 20px;
-  width: 800px;
+  width: 400px;
   height: 110px;
   background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
   display: flex;
@@ -10,7 +10,7 @@
 .info div {
   color: white;
   margin: 5px;
-  width: 200px;
+  width: 100px;
   height: 100px;
   background-color: black;
 }

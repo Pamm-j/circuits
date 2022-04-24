@@ -7,8 +7,8 @@ import Util from "./util";
 document.addEventListener("DOMContentLoaded", (event)=> {
   const canvas = document.getElementById('work-bench');
   let ctx = canvas.getContext("2d");
-  canvas.width = Util.ROW * Util.BLOCKSIZE
-  canvas.height = Util.COL * Util.BLOCKSIZE
+  canvas.width = Util.ROW * Util.SIZE
+  canvas.height = Util.COL * Util.SIZE
   const circ = new Circuits(canvas)
   // console.log(circ.board.currentPiece)
   
