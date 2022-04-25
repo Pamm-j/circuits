@@ -8,11 +8,11 @@ export default class Board {
     this.grid = this.buildGrid()
     this.ctx = ctx;
     this.currentPiece = new Piece()
-    this.currentPiece.rotatePiece()
-    this.placePiece()
-    console.table(this.grid)
-    this.drawPlacedPieces()
-    // this.drawCurrentPiece()
+    // this.currentPiece.rotatePiece()
+    // this.placePiece()
+    
+    // this.drawPlacedPieces()
+    this.drawCurrentPiece()
   }
 
   validPos(){
@@ -20,10 +20,16 @@ export default class Board {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
         const gridX = (this.currentPiece.x + x - 1)
-        const gridY = (this.currentPiece.y + y - 1)
+        const gridY = (this.currentPiece.y + y -1 )
         const tempCell = this.grid[gridX][gridY]
-        if ( tempCell !== 0 ) {//&& tempCell.type !== null
-          moveForward = false;
+        // console.log(cell)
+        // console.log(tempCell)
+        if ( cell.type !== null) {
+          if (tempCell !== 0) {
+            // console.log(tempCell)
+            // console.log(moveForward)
+            moveForward = false;
+          }
         } 
       })
     })
@@ -32,81 +38,87 @@ export default class Board {
 
   placePiece(){
     if (this.validPos()) {
+      // console.log("in placing pice")
       this.currentPiece.pieceShapeArray.forEach((row, x)=>{
         row.forEach((cell, y)=>{
           const gridX = (this.currentPiece.x + x - 1)
           const gridY = (this.currentPiece.y + y - 1)
+
+          // console.log(this.grid[gridX][gridY])
           if (cell.type !== null) {
-            this.grid[gridX][gridY] = cell
+            this.grid[gridX][gridY] = JSON.parse(JSON.stringify(cell))
           }
         })
       })
+      console.table(this.grid)
+      this.currentPiece = new Piece ()
     }
   }
 
  
-  // drawCurrentPiece() {
-  //   this.drawPiece(this.currentPiece.type, this.currentPiece.rotation, this.currentPiece.x, this.currentPiece.y)
-  // }
-  
-  
-
-  drawPlacedPieces() {
-    this.drawCell()
-    this.grid.forEach((row, x)=>{
+  drawCurrentPiece() {
+    this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
         if (cell !== 0) {
           const gridX = (this.currentPiece.x + x - 1)
           const gridY = (this.currentPiece.y + y - 1)
-          console.log([gridX,gridY])
-          this.drawCell(cell.type, cell.rotation, gridX, gridY)
+          // console.log([gridX,gridY])
+          this.drawCell(cell.type, cell.rotation, gridX, gridY, "current")
+        }
+      })
+    })
+  }
+  clearCurrentPiece() {
+    this.currentPiece.pieceShapeArray.forEach((row, x)=>{
+      row.forEach((cell, y)=>{
+        if (cell !== 0) {
+          const gridX = (this.currentPiece.x + x - 1)
+          const gridY = (this.currentPiece.y + y - 1)
+          // console.log([gridX,gridY])
+          this.clearCell( gridX, gridY)
+        }
+      })
+    })
+  }
+  
+  
+
+  drawPlacedPieces() {
+    this.grid.forEach((row, x)=>{
+      row.forEach((cell, y)=>{
+        if (cell !== 0) {
+          this.drawCell(cell.type, cell.rotation, x, y, "other")
         }
       })
     })
   }
 
-  drawPiece() {
-    // console.log(this.currentPiece)
-    // shapeArray.forEach((row, x) => {
-    //   row.forEach((cell, y)=> {
-    //     // console.log(cell)
-    //     // console.log([x-1,y-1])
-    //     constructors.x= (this.currentPiece.x + x - 1)
-    //     constructors.y= (this.currentPiece.y + y - 1)
-    //     if (cell!== 0) {
-    //       this.drawCell(this.currentPiece.type, this.currentPiece.rotation, constructors)
-    //     }
-    //   })
-    // })
-
-  }
   
-  
-  drawCell(type, rotation, x, y){
-    this.clearCell(x, y)
+  drawCell(type, rotation, x, y, status){
+    // this.clearCell(x, y)
     if (type === "corner") {
+      // console.log(rotation)
       switch (rotation) {
-        case 1:
-          Types.NE(x, y, this.ctx);
-          break;
-        case 2:
-          Types.SE(x, y, this.ctx);
+        case 0:
+          Types.NE(x, y, this.ctx, status);
           break;
         case 3:
-          Types.SW(x, y, this.ctx);
+          Types.SE(x, y, this.ctx, status);
           break;
-        case 4:
-          Types.NW(x, y, this.ctx);
+        case 2:
+          Types.SW(x, y, this.ctx, status);
+          break;
+        case 1:
+          Types.NW(x, y, this.ctx, status);
           break;
       }
     } else if (type === "bar") {
-      switch (rotation) {
+      switch (rotation%2) {
         case 0:
-          console.log("i made it")
-          Types.UP(x, y, this.ctx);
+          Types.UP(x, y, this.ctx, status);
           break;
         case 1:
-          Types.SIDE(x, y, this.ctx);
+          Types.SIDE(x, y, this.ctx, status);
           break;
       }
     }

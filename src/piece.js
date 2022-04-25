@@ -1,7 +1,6 @@
-import * as Util from "./util"
-import * as Shapes from "./shapes"
+import Util from "./util"
+import Shapes, { lShape, shortLine, tallLine, uShape } from "./shapes"
 import Cell from "./cell"
-import { lShape, shortCorner, shortLine, shortZee, tallCorner, tallLine, tallZee, uShape } from "./Shapes"
 // import * as Types from "./types"
 
 
@@ -13,19 +12,21 @@ export default class Piece {
   }
 
   getRandomShape() {
-    let shapes = Object.keys(Shapes)
+    // let shapes = Object.keys(Shapes)
+    let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
   buildpieceShapeArray(){
-    // let pieceShapeArray = JSON.parse(JSON.stringify(Shapes[this.getRandomShape()]))
-    let pieceShapeArray = JSON.parse(JSON.stringify(Shapes['tallLine']))
+    let name = this.getRandomShape()
+    console.log(name)
+    let pieceShapeArray = JSON.parse(JSON.stringify(Shapes[name]))
+    // let pieceShapeArray = JSON.parse(JSON.stringify(Shapes['uShape']))
     pieceShapeArray.forEach((row, i)=> {
       row.forEach((cell, j)=> {
         switch (cell) {
           case 0:
             pieceShapeArray[i][j] = new Cell(null, null)
-            // console.log(pieceShapeArray[i][j])
             break;
           case 1:
             pieceShapeArray[i][j] = new Cell("corner", 0)
@@ -37,11 +38,10 @@ export default class Piece {
             pieceShapeArray[i][j] = new Cell("corner", 2)
             break;
           case 4:
-            pieceShapeArray[i][j] = new Cell("corner", 4)
+            pieceShapeArray[i][j] = new Cell("corner", 3)
             break;
           case 5: 
             pieceShapeArray[i][j] = new Cell("bar", 0)
-            // console.log(pieceShapeArray[i][j])
             break;
           case 6: 
             pieceShapeArray[i][j] = new Cell("bar", 1)
@@ -49,19 +49,19 @@ export default class Piece {
         }     
       })
     })
-    // console.log(pieceShapeArray)
     return pieceShapeArray;
   }
 
   
   rotatePiece() {
-    console.log("in piece rotation")
+    console.log(this.pieceShapeArray)
     this.pieceShapeArray.forEach((row)=> {
       row.forEach((cell)=> {
         cell.rotateCell()
       })
     })
-    this.pieceShapeArray = transpose(this.pieceShapeArray)
+    let rotated = this.pieceShapeArray[0].map((val, index) => this.pieceShapeArray.map(row => row[index]).reverse())
+    this.pieceShapeArray = rotated
   }
 
   moveUp() {
@@ -95,19 +95,4 @@ export default class Piece {
   validYPos(n) {
     return n < Util.COL - 1 && n > 0;
  }
-}
-
-
-
-function transpose(arr) {
-  const transposedArr = [];
-
-  for (var col = 0; col < arr[0].length; col++) {
-    const transposedRow = [];
-    for (var row = 0; row < arr.length; row++) {
-      transposedRow.push(arr[row][col]);
-    }
-    transposedArr.push(transposedRow);
-  }
-  return transposedArr;
 }

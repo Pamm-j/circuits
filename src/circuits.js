@@ -1,6 +1,6 @@
 import Board from "./board"
 import Piece from "./piece"
-import * as Util from "./util"
+import Util from "./util"
 let board = {};
 export default class Circuits {
   constructor(canvas){
@@ -11,27 +11,26 @@ export default class Circuits {
   }
 
   action(e) {
-    if (e.keyCode === 90) {
+    if (e.keyCode === 83 ) {
       board.placePiece()
-      board.drawPlacedPieces()
-      // console.table(board.grid);
-    } else {
-      board.clearCell(board.currentPiece.x, board.currentPiece.y)
-      board.drawPlacedPieces()
+    } else { 
+      board.clearCurrentPiece()
       if (e.keyCode === 37) {
         board.currentPiece.moveLeft(board.ctx)
-        board.drawCurrentPiece()
       } else if (e.keyCode === 38) {
         board.currentPiece.moveUp(board.ctx)
       } else if (e.keyCode === 39) {
         board.currentPiece.moveRight(board.ctx)
       } else if (e.keyCode === 40) {
         board.currentPiece.moveDown(board.ctx)
-      } else if (e.keyCode === 32) {
-        board.currentPiece.rotate(board.ctx)
+      } else if (e.keyCode === 68) {
+        board.currentPiece.rotatePiece(board.ctx)
       }
+      board.drawPlacedPieces()
       board.drawCurrentPiece()
     }
+    // console.log(board.currentPiece)
+    // 
   }
 
   start() {

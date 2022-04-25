@@ -3,7 +3,9 @@ const Util = {
   COL: 8,
   SIZE: 50,
   GAUGE: 16,
-  MARGIN: 17
+  MARGIN: 17,
+  darkColor: "brown",
+  lightColor: "orange",
 } 
 
 export default Util;
