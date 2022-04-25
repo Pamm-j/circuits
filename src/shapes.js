@@ -1,4 +1,4 @@
-const Pieces = {
+const Shapes = {
   shortCorner: [
     [0, 0, 0], 
     [0, 1, 0], 
@@ -42,4 +42,4 @@ const Pieces = {
 }
 
   
-module.exports = Pieces;
+module.exports = Shapes;

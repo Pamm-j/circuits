@@ -1,9 +1,10 @@
 const Util = {
   ROW: 8, 
-  COL: 7,
+  COL: 8,
   SIZE: 50,
   GAUGE: 16,
   MARGIN: 17
-}
+} 
 
-module.exports = Util;
+export default Util;
+// export * as Util from "./util"

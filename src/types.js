@@ -1,38 +1,40 @@
+import Util from './util'
+
 const Types = {
-  UP: function(info){ 
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect((info.x*info.size)+ info.margin, info.y*info.size, info.gauge, info.size);
+  UP: function(x, y, ctx){ 
+    ctx.fillStyle = "orange";
+    ctx.fillRect((x*Util.SIZE)+ Util.MARGIN, y*Util.SIZE, Util.GAUGE, Util.SIZE);
   },
-  SIDE: function(info){ 
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect((info.x*info.size), (info.y*info.size)+ info.margin, info.size, info.gauge);
+  SIDE: function(x, y, ctx){ 
+    ctx.fillStyle = "orange";
+    ctx.fillRect((x*Util.SIZE), (y*Util.SIZE)+ Util.MARGIN, Util.SIZE, Util.GAUGE);
   },
-  NE: function(info){ 
-    // info.ctx.fillStyle = "magenta";
-    // info.ctx.fillRect(info.x*info.size, info.y*info.size, info.size, info.size);
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size, info.gauge, info.gauge + info.margin);
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size + info.margin, info.gauge + info.margin, info.gauge);
+  NE: function(x, y, ctx){ 
+    // ctx.fillStyle = "magenta";
+    // ctx.fillRect(x*Util.SIZE, y*Util.SIZE, Util.SIZE, Util.SIZE);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE, Util.GAUGE, Util.GAUGE + Util.MARGIN);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE + Util.MARGIN, Util.GAUGE + Util.MARGIN, Util.GAUGE);
   },
-  SE: function(info){ 
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size + info.margin, info.gauge, info.gauge + info.margin);
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size + info.margin, info.gauge + info.margin, info.gauge);
+  SE: function(x, y, ctx){ 
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE + Util.MARGIN, Util.GAUGE, Util.GAUGE + Util.MARGIN);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE + Util.MARGIN, Util.GAUGE + Util.MARGIN, Util.GAUGE);
   },
-  NW: function(info){ 
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size, info.gauge, info.gauge + info.margin);
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size, info.y*info.size + info.margin, info.gauge + info.margin, info.gauge);
+  NW: function(x, y, ctx){ 
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE, Util.GAUGE, Util.GAUGE + Util.MARGIN);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE, y*Util.SIZE + Util.MARGIN, Util.GAUGE + Util.MARGIN, Util.GAUGE);
   },
-  SW: function(info){ 
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size + info.margin, info.y*info.size + info.margin, info.gauge, info.gauge + info.margin);
-    info.ctx.fillStyle = "orange";
-    info.ctx.fillRect(info.x*info.size, info.y*info.size + info.margin, info.gauge + info.margin, info.gauge);
+  SW: function(x, y, ctx){ 
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE + Util.MARGIN, y*Util.SIZE + Util.MARGIN, Util.GAUGE, Util.GAUGE + Util.MARGIN);
+    ctx.fillStyle = "orange";
+    ctx.fillRect(x*Util.SIZE, y*Util.SIZE + Util.MARGIN, Util.GAUGE + Util.MARGIN, Util.GAUGE);
   }
 }
 
-module.exports = Types;
+export default Types;
