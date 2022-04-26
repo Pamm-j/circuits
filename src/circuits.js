@@ -1,13 +1,12 @@
 import Board from "./board"
-import Piece from "./piece"
-import Util from "./util"
+
 let board = {};
 export default class Circuits {
   constructor(canvas){
     this.ctx = canvas.getContext("2d");
     this.dimensions = { width: canvas.width, height: canvas.height };
     this.start();
-    document.addEventListener("keyup", this.action)
+    document.addEventListener("keyup", this.action);
   }
 
   action(e) {
@@ -29,9 +28,7 @@ export default class Circuits {
       board.drawPlacedPieces()
       board.drawCurrentPiece()
     }
-    // console.log(board.currentPiece)
-    // 
-  }
+  } 
 
   start() {
     board = new Board(this.ctx)

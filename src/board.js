@@ -1,18 +1,24 @@
 import Piece from "./piece"
 import Util from "./util"
 import Types from "./types"
-import Shapes from "./shapes"
+import LinkedList from "./linkedlist"
 
 export default class Board {
   constructor (ctx) {
-    this.grid = this.buildGrid()
+    this.grid = this.buildGrid();
     this.ctx = ctx;
-    this.currentPiece = new Piece()
-    // this.currentPiece.rotatePiece()
+    this.currentPiece = new Piece();
+    this.lists = [];
+    this.drawCurrentPiece();
+    // this.placePiece();
+    // this.currentPiece.moveDown();
+    // this.currentPiece.moveDown();
+    // this.currentPiece.moveDown();
     // this.placePiece()
-    
     // this.drawPlacedPieces()
-    this.drawCurrentPiece()
+    // console.table(this.grid)
+    // console.log(this.lists)
+    // this.consolidateLists()
   }
 
   validPos(){
@@ -22,12 +28,8 @@ export default class Board {
         const gridX = (this.currentPiece.x + x - 1)
         const gridY = (this.currentPiece.y + y -1 )
         const tempCell = this.grid[gridX][gridY]
-        // console.log(cell)
-        // console.log(tempCell)
         if ( cell.type !== null) {
           if (tempCell !== 0) {
-            // console.log(tempCell)
-            // console.log(moveForward)
             moveForward = false;
           }
         } 
@@ -38,23 +40,26 @@ export default class Board {
 
   placePiece(){
     if (this.validPos()) {
-      // console.log("in placing pice")
+      let l = this.createList()
       this.currentPiece.pieceShapeArray.forEach((row, x)=>{
         row.forEach((cell, y)=>{
           const gridX = (this.currentPiece.x + x - 1)
           const gridY = (this.currentPiece.y + y - 1)
-
-          // console.log(this.grid[gridX][gridY])
           if (cell.type !== null) {
+            l.insertFirst([gridX, gridY], cell.type, cell.rotation)
             this.grid[gridX][gridY] = JSON.parse(JSON.stringify(cell))
           }
         })
       })
-      console.table(this.grid)
+      // console.table(this.grid)
+      // console.log(this.lists)
+
       this.currentPiece = new Piece ()
+      this.drawPlacedPieces()
+      this.drawCurrentPiece()
+      this.consolidateLists()
     }
   }
-
  
   drawCurrentPiece() {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
@@ -68,6 +73,7 @@ export default class Board {
       })
     })
   }
+
   clearCurrentPiece() {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
@@ -127,7 +133,62 @@ export default class Board {
   clearCell(x, y) {
     this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
   }
-    
+  ///////////////////////////////////////////////////
+  ////////methods relating to the linked list////////
+  ///////////////////////////////////////////////////
+  createList() {
+    let list = new LinkedList()
+    this.lists.push(list)
+    return list;
+  }
+
+  consolidateLists() {
+    let weAreDoneHere = false;
+    let termini = [];
+    this.lists.forEach((list, listIndex)=> {
+      termini.push([list.getLastNode(), "tail", listIndex])
+      termini.push([list.head, "head", listIndex])
+      if (list.size !== 1) {
+      }
+    })
+    termini.forEach((dataArray, i)=>{
+      let currTerminiType = dataArray[1]
+      let currList = dataArray[0]
+      for (let j = i + 1; j < termini.length; j++) {
+        let testArray = termini[j]
+        let testTerminiType = testArray[1]
+        let testList = testArray[0]
+
+        let currpos = JSON.parse(JSON.stringify(currList.pos))
+        currpos[1]++;
+
+        if (JSON.stringify(currpos) === JSON.stringify(testList.pos) && !weAreDoneHere ) {
+          this.joinLists(testArray, dataArray)
+          weAreDoneHere = true;
+        }
+      }
+    })
+    console.log(this.lists)
+  }
+
+  joinLists(data1, data2){
+    //data format is [the node that is touching the neighbor, 'tail' or 'head, index of list in this.lists]
+    let index1 = data1[2]
+    let index2 = data2[2]
+    console.log(data1)
+    console.log(this.lists[index2])
+    console.log(this.lists[index1])
+    // if ( data1[1] === "head" & data2[1] !=="head") {
+    //   console.log("data1  is the head")
+
+    // } else if ( data1[1] !== "head" & data2[1] ==="head") {
+      // console.log("data2  is the head")
+      this.lists[index2].combineLists(this.lists[index1])
+      this.lists.splice(index1, 1)
+
+    // }
+  }
+
   buildGrid(){
     const grid = []
     for (let i = 0; i < Util.ROW; i++) {

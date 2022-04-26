@@ -5,7 +5,7 @@ const Util = {
   GAUGE: 16,
   MARGIN: 17,
   darkColor: "brown",
-  lightColor: "orange",
+  lightColor: "orange"
 } 
 
 export default Util;

@@ -13,13 +13,14 @@ export default class Piece {
 
   getRandomShape() {
     // let shapes = Object.keys(Shapes)
-    let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
+    // let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
+    let shapes = [ "shortLine" ]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
   buildpieceShapeArray(){
     let name = this.getRandomShape()
-    console.log(name)
+    // console.log(name)
     let pieceShapeArray = JSON.parse(JSON.stringify(Shapes[name]))
     // let pieceShapeArray = JSON.parse(JSON.stringify(Shapes['uShape']))
     pieceShapeArray.forEach((row, i)=> {
