@@ -17,6 +17,28 @@ export default class LinkedList {
     }
     this.size++;
   }
+
+  push(newNode) {
+    if (!this.head) {
+      this.head = newNode
+      this.tail = this.head
+    } else {
+      this.tail.next = newNode
+      this.tail = newNode
+    }
+    this.size++;
+  }
+
+  unshift(newNode) {
+    if(!this.head) {
+       this.head = newNode;
+       this.tail = newNode;
+     } else {
+       newNode.next = this.head;
+       this.head = newNode;
+     }
+     this.size++;
+   }
   
   insertFirst(pos, type, rotation) {
     let newNode = new Node(pos, type, rotation);

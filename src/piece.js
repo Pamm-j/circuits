@@ -14,7 +14,7 @@ export default class Piece {
   getRandomShape() {
     // let shapes = Object.keys(Shapes)
     // let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
-    let shapes = [ "shortCorner"]
+    let shapes = [ "shortCorner", 'shortLine']
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
