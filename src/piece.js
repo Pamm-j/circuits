@@ -1,5 +1,5 @@
 import Util from "./util"
-import Shapes, { lShape, shortLine, tallLine, uShape } from "./shapes"
+import Shapes, { lShape, shortCorner, shortLine, tallLine, uShape } from "./shapes"
 import Cell from "./cell"
 // import * as Types from "./types"
 
@@ -14,7 +14,7 @@ export default class Piece {
   getRandomShape() {
     // let shapes = Object.keys(Shapes)
     // let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
-    let shapes = [ "shortLine" ]
+    let shapes = [ "shortCorner"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
@@ -55,7 +55,7 @@ export default class Piece {
 
   
   rotatePiece() {
-    console.log(this.pieceShapeArray)
+    // console.log(this.pieceShapeArray)
     this.pieceShapeArray.forEach((row)=> {
       row.forEach((cell)=> {
         cell.rotateCell()

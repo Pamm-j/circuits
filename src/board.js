@@ -12,6 +12,7 @@ export default class Board {
     this.drawCurrentPiece();
     // this.placePiece();
     // this.currentPiece.moveDown();
+    // this.placePiece()
     // this.currentPiece.moveDown();
     // this.currentPiece.moveDown();
     // this.placePiece()
@@ -51,13 +52,16 @@ export default class Board {
           }
         })
       })
-      // console.table(this.grid)
-      // console.log(this.lists)
-
-      this.currentPiece = new Piece ()
+      this.clearCurrentPiece()
       this.drawPlacedPieces()
-      this.drawCurrentPiece()
+
+      console.table(this.grid)
+      console.log(this.lists)
+
       this.consolidateLists()
+      this.currentPiece = new Piece ()
+      this.drawCurrentPiece()
+
     }
   }
  
@@ -87,8 +91,6 @@ export default class Board {
     })
   }
   
-  
-
   drawPlacedPieces() {
     this.grid.forEach((row, x)=>{
       row.forEach((cell, y)=>{
@@ -98,7 +100,6 @@ export default class Board {
       })
     })
   }
-
   
   drawCell(type, rotation, x, y, status){
     // this.clearCell(x, y)
@@ -143,51 +144,82 @@ export default class Board {
   }
 
   consolidateLists() {
-    let weAreDoneHere = false;
-    let termini = [];
-    this.lists.forEach((list, listIndex)=> {
-      termini.push([list.getLastNode(), "tail", listIndex])
-      termini.push([list.head, "head", listIndex])
-      if (list.size !== 1) {
-      }
-    })
-    termini.forEach((dataArray, i)=>{
-      let currTerminiType = dataArray[1]
-      let currList = dataArray[0]
-      for (let j = i + 1; j < termini.length; j++) {
-        let testArray = termini[j]
-        let testTerminiType = testArray[1]
-        let testList = testArray[0]
+    console.log("starting to consolodate")
 
-        let currpos = JSON.parse(JSON.stringify(currList.pos))
-        currpos[1]++;
+    // debugger
+    let defNoMoreMatches = false;
+    while (!defNoMoreMatches) {
+      defNoMoreMatches = true;
+      let weAreDoneHere = false;
+      this.lists.forEach((list, listDex)=>{
+        for (let i = 0; i < this.lists.length; i++) {
+          // head to head links or tail to head
+          console.log('hodor')
+          if ( list.head && this.lists[i].head && list.tail && this.lists[i].tail &&
+            (JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].head.link1) || 
+              JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].head.link2) ||
+              JSON.stringify(list.tail.pos) === JSON.stringify(this.lists[i].tail.link1) ||
+              JSON.stringify(list.tail.pos) === JSON.stringify(this.lists[i].tail.link2)) && 
+              !weAreDoneHere) {
+            if (list.head === this.lists[i].head ) {
+              console.log("DONT BITE YOUR OWN TAIL")
+            } else {
+              console.log("head to head, or tail to tail, as it was meant to be")
+              this.lists[listDex].reverse()
+              this.joinLists(listDex, i)
+              weAreDoneHere = true;
+              defNoMoreMatches = false;
+            }
+          } else if ( list.head && this.lists[i].head && list.tail && this.lists[i].tail &&
+                    (JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].tail.link1) ||
+                    JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].tail.link2)) && 
+                    !weAreDoneHere) {
+            if (list.head === this.lists[i].head) {
+              console.log("DONT BITE YOUR OWN TAIL")
+            } else {
+              console.log("head to tail, as god intended")
+              // console.log(this.lists[listDex])
+              // console.log(this.lists[i])
+              this.joinLists(listDex, i)
+              weAreDoneHere = true;
+              defNoMoreMatches = false;
 
-        if (JSON.stringify(currpos) === JSON.stringify(testList.pos) && !weAreDoneHere ) {
-          this.joinLists(testArray, dataArray)
-          weAreDoneHere = true;
+            }
+          }
         }
-      }
-    })
+      })
+
+    }
+    console.log(["number of lists in this.list:",this.lists.length])
     console.log(this.lists)
+    // this.lists.forEach((list) => list.printlist())
   }
+  
+  joinLists(index1, index2){
+    console.log("in join lists")
+    this.lists[index2].combineLists(this.lists[index1])
+    this.lists = this.lists.filter((list)=> list.head)
+    console.log(this.lists)
 
-  joinLists(data1, data2){
-    //data format is [the node that is touching the neighbor, 'tail' or 'head, index of list in this.lists]
-    let index1 = data1[2]
-    let index2 = data2[2]
-    console.log(data1)
-    console.log(this.lists[index2])
-    console.log(this.lists[index1])
-    // if ( data1[1] === "head" & data2[1] !=="head") {
-    //   console.log("data1  is the head")
-
-    // } else if ( data1[1] !== "head" & data2[1] ==="head") {
-      // console.log("data2  is the head")
-      this.lists[index2].combineLists(this.lists[index1])
-      this.lists.splice(index1, 1)
-
-    // }
   }
+  // consolidateLists() {
+  //   let weAreDoneHere = false;
+  //   let termini = this.buildTerminiArray()
+  //   // termini is an array of objects, which have a 'terminiType', a 'node', and and 'listIndex' which refers to this.lists
+    
+
+  //   termini
+
+  //   console.log(this.lists)
+  // }
+  // buildTerminiArray(){
+  //   let termini = [];
+  //   this.lists.forEach((list, listIndex)=> {
+  //     termini.push({node: list.getLastNode(), terminiType: "tail", listIndex: listIndex})
+  //     termini.push({node: list.head, terminiType: "head", listIndex: listIndex})
+  //   })
+  //   return termini
+  // }
 
   buildGrid(){
     const grid = []
