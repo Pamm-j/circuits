@@ -30,6 +30,7 @@
   width: 200px;
   height: 100px;
   background-color: black;
+  text-align: center;
 }
 
 #work-bench {
@@ -57,4 +58,6 @@ h2 {
 h3 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+
 

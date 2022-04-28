@@ -12,17 +12,17 @@ export default class Piece {
 
 
   getRandomShape() {
-    // let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    // "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    // "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
-    // "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    // "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    // "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
-    // "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
-    // "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
-    // "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
-    // "tallZee", "tallZee", "tallZee", "tallZee"]
-    let shapes = [ "uShape"]
+    let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
+    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
+    "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
+    "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
+    "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
+    "tallZee", "tallZee", "tallZee", "tallZee"]
+    // let shapes = [ "uShape"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
@@ -60,7 +60,13 @@ export default class Piece {
 
   
   rotatePiece() {
-    let rotated = this.pieceShapeArray[0].map((val, index) => this.pieceShapeArray.map(row => row[index]).reverse())
+    let rotated = this.pieceShapeArray[0].map((_, index) => {
+      return this.pieceShapeArray.map(row => {
+        return row[index]
+      }).reverse()
+    })
+
+
     let newHeight = rotated[0].length
     let newLength = rotated.length
     if (this.validXPos(newLength + this.x - 1 ) && this.validYPos(newHeight + this.y -1 )){
