@@ -1,4 +1,3 @@
-import Node from "./node";
 export default class LinkedList {
   constructor (node) {
     this.head = node;
@@ -44,7 +43,6 @@ export default class LinkedList {
     }
   }
 
-
   each(callback){
     let current = this.head;
     let count = 0;
@@ -69,7 +67,6 @@ export default class LinkedList {
     let prev;
     let next;
 
-    // for (var i = 0; i < this.length; i++){
     while (current) {
       next = current.next;
       current.next = prev;

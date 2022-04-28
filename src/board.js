@@ -3,24 +3,30 @@ import Util from "./util"
 import Types from "./types"
 import LinkedList from "./linkedlist"
 import Node from "./node"
+import Timer from "./timer"
 
 export default class Board {
   constructor (ctx) {
-    
     this.grid = this.buildGrid();
     this.score = 0;
     this.ctx = ctx;
     this.lists = [];
     this.currentPiece = new Piece();
-
-
     this.drawCurrentPiece()
+    this.resetTimer()
+  }
+
+  resetTimer(){
+    this.drawTimerBox(this.ctx)
+    if (this.timer) this.timer.stop()
+    this.timer = new Timer(5000)
+    this.timer.start(this.ctx)
   }
 
   checkFullCircuit(){
     for(let i = 0; i < this.lists.length; i++) {
       let list = this.lists[i]
-      if (this.checkNodes(list.head, list.tail)){
+      if (this.checkNodes(list.head, list.tail) && list.size > 3){
         this.score += list.size*10
         const scoreDisplay = document.querySelector("#score")
         scoreDisplay.innerHTML = this.score
@@ -36,8 +42,14 @@ export default class Board {
     }
   }
 
-  animatedDeletion(list){
+  drawTimerBox(ctx) {
+    ctx.fillStyle = "#9E714E";
+    ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL);
+    ctx.fillStyle = "#4F190D";
+    ctx.fillRect(Util.SIZE*Util.ROW+5, 5, Util.SIZE - 10, Util.SIZE*Util.COL - 10);
+  }
 
+  animatedDeletion(list){
     let n = 0
     list.each((pos)=>{
       let x, y;
@@ -47,9 +59,6 @@ export default class Board {
       setTimeout(()=>this.clearCell(x,y), n*50)
     })
   }
-
-
-  
 
   returnEligbleNeighbors(node){
     let toDoList = []
@@ -152,7 +161,8 @@ export default class Board {
       this.drawPlacedPieces()
       this.checkFullCircuit()
       this.currentPiece = new Piece ()
-      this.drawCurrentPiece()      
+      this.resetTimer()
+      this.drawCurrentPiece() 
     }
   }
 
@@ -266,16 +276,16 @@ export default class Board {
   }
   checkHead(list, node){
     return (checkEquality(node.link1, list.head.pos) && checkEquality(list.head.link1, node.pos))
-      || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link2, node.pos))
-      || (checkEquality(node.link1, list.head.pos) && checkEquality(list.head.link2, node.pos))
-      || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link1, node.pos))
+    || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link2, node.pos))
+    || (checkEquality(node.link1, list.head.pos) && checkEquality(list.head.link2, node.pos))
+    || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link1, node.pos))
   }
 
   checkTail(list, node) {
     return (checkEquality(node.link1, list.tail.pos) && checkEquality(list.tail.link1, node.pos))
-      || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
-      || (checkEquality(node.link1, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
-      || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link1, node.pos))
+    || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
+    || (checkEquality(node.link1, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
+    || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link1, node.pos))
   }
   checkNodes(head, tail) {
     return (checkEquality(head.link1, tail.pos) && checkEquality(tail.link1, head.pos))

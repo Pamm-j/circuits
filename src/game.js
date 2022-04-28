@@ -1,11 +1,12 @@
 import Board from "./board"
+import Timer from "./timer";
 
 let board = {};
 export default class Circuits {
   constructor(canvas){
     this.ctx = canvas.getContext("2d");
     this.dimensions = { width: canvas.width, height: canvas.height };
-    this.start();
+    this.play();
     document.addEventListener("keydown", this.action);
   }
 
@@ -32,6 +33,15 @@ export default class Circuits {
 
   start() {
     board = new Board(this.ctx)
+    let timer = new Timer()
+  }
+
+  play(){
+    this.start()
+  }
+
+  reset(){
+
   }
 
 }

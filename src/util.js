@@ -1,11 +1,12 @@
 const Util = {
-  ROW: 18, 
+  ROW: 15, 
   COL: 8,
-  SIZE: 50,
+  SIZE: 40,
   GAUGE: 16,
-  MARGIN: 17,
+  MARGIN: 12,
   darkColor: "brown",
-  lightColor: "orange"
+  lightColor: "orange",
+  gravity: 0.3
 } 
 
 export default Util;

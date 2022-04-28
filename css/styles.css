@@ -1,23 +1,42 @@
-.info {
-  margin-top: 20px;
-  width: 400px;
-  height: 110px;
-  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+.sub-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  width: 650px;
 }
 
+.info {
+  margin-top: 5px;
+  width: 650px;
+  height: 110px;
+  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
+  display: flex;
+  justify-content: space-between;
+  border: 5px solid black;
+}
+
+#timer {
+  margin-top: 5px;
+  width: 285px;
+  height: 110px;
+  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
+  display: flex;
+  justify-content: space-between;
+  border: 5px solid black;
+}
 .info div {
   color: white;
   margin: 5px;
-  width: 100px;
+  width: 200px;
   height: 100px;
   background-color: black;
 }
 
 #work-bench {
-  background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
-  border: 10px solid blue;
+  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4");
+  border: 5px solid black;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 .title {
@@ -31,6 +50,11 @@
   align-content: center;
   align-items: center;
 }
+h2 {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 h3 {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+

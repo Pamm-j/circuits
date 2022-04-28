@@ -8,21 +8,37 @@ export default class Piece {
   constructor () {
     this.x = 2
     this.y = 2 
-    this.pieceShapeArray = this.buildpieceShapeArray()
+    if (!this.currentShape) this.currentShape = this.generateRandomShapeName()
+    this.pieceShapeArray = this.buildpieceShapeArray(this.currentShape)
   }
 
-  getRandomShape() {
+  getRandomShape(){
+    
+    const nextShape = this.currentShape
+    this.currentShape = this.generateRandomShapeName()
+    const nextPiece = document.querySelector("#next-piece")
+    nextPiece.innerHTML = this.currentShape
+    return nextShape
+  }
+
+  generateRandomShapeName() {
     // let shapes = Object.keys(Shapes)
-    let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
-    // let shapes = [ "uShape"]
+    let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
+    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
+    "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
+    "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
+    "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
+    "tallZee", "tallZee", "tallZee", "tallZee"]
+    // let shapes = [ "lShape"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
-  buildpieceShapeArray(){
-    let name = this.getRandomShape()
-    // console.log(name)
+  buildpieceShapeArray(name){
     let pieceShapeArray = JSON.parse(JSON.stringify(Shapes[name]))
-    // let pieceShapeArray = JSON.parse(JSON.stringify(Shapes['uShape']))
     pieceShapeArray.forEach((row, i)=> {
       row.forEach((cell, j)=> {
         switch (cell) {
@@ -55,18 +71,16 @@ export default class Piece {
 
   
   rotatePiece() {
-    // console.log(this.pieceShapeArray)
     let rotated = this.pieceShapeArray[0].map((val, index) => this.pieceShapeArray.map(row => row[index]).reverse())
-    
     let newHeight = rotated[0].length
     let newLength = rotated.length
-    this.pieceShapeArray = rotated
-    this.pieceShapeArray.forEach((row)=> {
-      row.forEach((cell)=> {
-        cell.rotateCell()
+    if (this.validXPos(newLength + this.x - 1 ) && this.validYPos(newHeight + this.y -1 )){
+      this.pieceShapeArray = rotated
+      this.pieceShapeArray.forEach((row)=> {
+        row.forEach((cell)=> {
+          cell.rotateCell()
+        })
       })
-    })
-    if (this.validXPos(newLength + this.x) && this.validYPos(newHeight - this.y)){
     }
     
   }
@@ -86,14 +100,12 @@ export default class Piece {
 
   moveLeft() {
     if (this.checkHorizontalArray(this.x - 1)){
-    // if (this.validXPos(this.x - 1)) {
       this.x -= 1;
     }
   }
 
   moveRight() {
     if (this.checkHorizontalArray(this.x)){
-    // if (this.validXPos(this.x + 1)) 
       this.x += 1;
     }
   }
