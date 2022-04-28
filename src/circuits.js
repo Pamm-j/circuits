@@ -6,7 +6,7 @@ export default class Circuits {
     this.ctx = canvas.getContext("2d");
     this.dimensions = { width: canvas.width, height: canvas.height };
     this.start();
-    document.addEventListener("keyup", this.action);
+    document.addEventListener("keydown", this.action);
   }
 
   action(e) {

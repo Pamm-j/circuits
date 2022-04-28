@@ -13,8 +13,8 @@ export default class Piece {
 
   getRandomShape() {
     // let shapes = Object.keys(Shapes)
-    // let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
-    let shapes = [ "tallCorner"]
+    let shapes = ["shortCorner", "tallCorner", "shortLine", "tallLine", "lShape", "uShape"]
+    // let shapes = [ "uShape"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
@@ -60,8 +60,6 @@ export default class Piece {
     
     let newHeight = rotated[0].length
     let newLength = rotated.length
-    console.log(newHeight + this.y)
-    console.log(newLength+ this.x)
     this.pieceShapeArray = rotated
     this.pieceShapeArray.forEach((row)=> {
       row.forEach((cell)=> {
@@ -110,9 +108,6 @@ export default class Piece {
     let length = this.pieceShapeArray.length
     let leftPos = x
     let rightPos = x + length
-    // console.log(length)
-    console.log(leftPos)
-    console.log(rightPos)
     return (this.validXPos(leftPos) && this.validXPos(rightPos))
   }
 

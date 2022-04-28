@@ -14,79 +14,29 @@ export default class Board {
     this.currentPiece = new Piece();
 
 
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.placePiece()
-    // this.currentPiece = new Piece();
-    // this.currentPiece.moveRight()
-    // this.currentPiece.rotatePiece()
-    // this.placePiece()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.rotatePiece()
-    // this.placePiece()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.moveRight()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.placePiece()
-    // this.animatedDeletion(this.lists[0])
-    
-    // this.placePiece()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.rotatePiece()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.currentPiece.moveDown()
-    // this.placePiece()
-    // console.log(this.lists[0].head )
-    // console.log(this.lists[0].tail)
     this.drawCurrentPiece()
-    // this.lists.forEach((list) =>{
-      //   console.log("next list")
-      //   list.printlist()
-      // })
-      
-      
-      // let n = new Node([3,2], "corner", 0)
-      // let l = this.createList(n)
-      // this.drawCurrentPiece();
-      // this.node = new Node([3,1], "bar", 2)
-      // console.log(this.node)
-      // this.countEligbleNeighbors(this.node)
-      // console.log(this.lists)
-      // this.moveIn(this.node)
   }
 
   checkFullCircuit(){
     for(let i = 0; i < this.lists.length; i++) {
       let list = this.lists[i]
-      // console.log(list)
       if (this.checkNodes(list.head, list.tail)){
         this.score += list.size*10
         const scoreDisplay = document.querySelector("#score")
         scoreDisplay.innerHTML = this.score
         this.animatedDeletion(list)
         list.delete()
-        this.lists = this.lists.filter((list)=> list.head)
+        this.lists = this.lists.filter((list)=> {
+          if (list.head === 'bananas') {
+            return false;
+          } 
+          return true;
+        })
       }
     }
   }
 
   animatedDeletion(list){
-    //console.log(list)
 
     let n = 0
     list.each((pos)=>{
@@ -96,21 +46,6 @@ export default class Board {
       this.grid[x][y] = 0
       setTimeout(()=>this.clearCell(x,y), n*50)
     })
-    // list.slowEach((x,y)=>{
-    //   this.clearCell(x,y)
-    // })
-
-
-
-
-    // list.slowEach((x,y)=>{
-    //   console.log(x)
-    //   // let x, y;
-    //   // [x,y] = pos
-    //   console.log(this.clearCell)
-    //   setTimeout(this.clearCell(x, y), 400)
-      // this.clearCell(x, y)
-    // })
   }
 
 
@@ -139,7 +74,6 @@ export default class Board {
         count += 1
       } 
     }
-
     return toDoList;
   }
 
@@ -154,26 +88,29 @@ export default class Board {
     } else {
       this.manyMoves(node, neighbors)
     }
-    // this.lists[0].printList()
-    
-    // console.log(["number of lists in this.list:",this.lists.length])
-    // console.log(this.lists)
   }
   manyMoves(node, resultArray){
     this.singleMove(node, resultArray[0])
     let list1 = resultArray[0][0]
     let list2 = resultArray[1][0]
-    console.log(list1, list2);
 
     if (resultArray[0][1] === resultArray[1][1] && resultArray[0][1] === "tail"){
       list1.reverse()
+      list2.combineLists(list1)
     } else if (resultArray[0][1] === resultArray[1][1] && resultArray[0][1] === "head"){
       list2.reverse()
+      list2.combineLists(list1)
+    } else if (resultArray[0][1] === 'head') {
+      list2.combineLists(list1)
+    } else {
+      list1.combineLists(list2)
     }
-    // debugger
-    list2.combineLists(list1)
-    this.lists = this.lists.filter((list)=> list.head)
-
+    this.lists = this.lists.filter((list)=> {
+      if (list.head === 'bananas') {
+        return false;
+      } 
+      return true;
+      })
   }
 
   singleMove(node, result) {
@@ -181,18 +118,13 @@ export default class Board {
     let list = result[0]
     switch (checker) {
       case "head":
-        // console.log("making a head")
         list.unshift(node)
         break;
       case "tail":
-        // console.log("making a tail")
         list.push(node)
         break;
       case undefined: 
-
-        // console.log("making my own list")
-        let l = this.createList()
-        l.push(node)
+        this.createList(node)
         break;
     }
   }
@@ -204,8 +136,6 @@ export default class Board {
               
   placePiece(){
     if (this.validPos()) {
-      // console.log("Im beginning to place this piece, it's an ugly one, so listen up! I will only say this once!")
-      // let l = this.createList()
       this.currentPiece.pieceShapeArray.forEach((row, x)=>{
         row.forEach((cell, y)=>{
           const gridX = (this.currentPiece.x + x )
@@ -222,10 +152,7 @@ export default class Board {
       this.drawPlacedPieces()
       this.checkFullCircuit()
       this.currentPiece = new Piece ()
-      this.drawCurrentPiece()
-      // console.table(this.grid)
-      // console.log(this.lists)
-      
+      this.drawCurrentPiece()      
     }
   }
 
@@ -261,7 +188,6 @@ export default class Board {
         if (cell !== 0) {
           const gridX = (this.currentPiece.x + x )
           const gridY = (this.currentPiece.y + y )
-          // console.log([gridX,gridY])
           this.drawCell(cell.type, cell.rotation, gridX, gridY, "current")
         }
       })
@@ -274,7 +200,6 @@ export default class Board {
         if (cell !== 0) {
           const gridX = (this.currentPiece.x + x )
           const gridY = (this.currentPiece.y + y )
-          // console.log([gridX,gridY])
           this.clearCell( gridX, gridY)
         }
       })
@@ -292,9 +217,7 @@ export default class Board {
   }
   
   drawCell(type, rotation, x, y, status){
-    // this.clearCell(x, y)
     if (type === "corner") {
-      // console.log(rotation)
       switch (rotation) {
         case 0:
           Types.NE(x, y, this.ctx, status);
@@ -328,8 +251,7 @@ export default class Board {
   ////////methods relating to the linked list////////
   ///////////////////////////////////////////////////
   createList(node) {
-    let list = new LinkedList()
-    list.push(node)
+    let list = new LinkedList(node)
     this.lists.push(list)
     return list;
   }
@@ -342,32 +264,29 @@ export default class Board {
     }
     return grid
   }
-  checkEquality(thing1, thing2) {
-    return JSON.stringify(thing1) === JSON.stringify(thing2);
-  }
   checkHead(list, node){
-    return (this.checkEquality(node.link1, list.head.pos) && (this.checkEquality(list.head.link1, node.pos)
-    || this.checkEquality(list.head.link2, node.pos))
-    || (this.checkEquality(node.link2, list.head.pos) && (this.checkEquality(list.head.link1, node.pos)
-    || this.checkEquality(list.head.link2, node.pos)))) 
+    return (checkEquality(node.link1, list.head.pos) && checkEquality(list.head.link1, node.pos))
+      || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link2, node.pos))
+      || (checkEquality(node.link1, list.head.pos) && checkEquality(list.head.link2, node.pos))
+      || (checkEquality(node.link2, list.head.pos) && checkEquality(list.head.link1, node.pos))
   }
 
   checkTail(list, node) {
-    if ((this.checkEquality(node.link1, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2, node.pos))) ||
-    (this.checkEquality(node.link2, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2,  node.pos))) === true) {
-      return true;
-    } else {
-      return false
-    }
+    return (checkEquality(node.link1, list.tail.pos) && checkEquality(list.tail.link1, node.pos))
+      || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
+      || (checkEquality(node.link1, list.tail.pos) && checkEquality(list.tail.link2, node.pos))
+      || (checkEquality(node.link2, list.tail.pos) && checkEquality(list.tail.link1, node.pos))
   }
-  checkNodes(H, T) {
-    if (((this.checkEquality(T.link1, H.pos) && (this.checkEquality(H.link1, T.pos) || this.checkEquality(H.link2, T.pos))) ||
-        (this.checkEquality(T.link2, H.pos) && (this.checkEquality(H.link1, T.pos) || this.checkEquality(H.link2,  T.pos)))) === true) {
-      return true;
-    } else {
-      return false
-    }
+  checkNodes(head, tail) {
+    return (checkEquality(head.link1, tail.pos) && checkEquality(tail.link1, head.pos))
+    || (checkEquality(head.link2, tail.pos) && checkEquality(tail.link2, head.pos))
+    || (checkEquality(head.link1, tail.pos) && checkEquality(tail.link2, head.pos))
+    || (checkEquality(head.link2, tail.pos) && checkEquality(tail.link1, head.pos))
   }
 
+}
+
+const checkEquality = (thing1, thing2) => {
+  return JSON.stringify(thing1) === JSON.stringify(thing2);
 }
       
