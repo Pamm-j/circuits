@@ -10,7 +10,5 @@ document.addEventListener("DOMContentLoaded", (event)=> {
   canvas.width = Util.ROW * Util.SIZE
   canvas.height = Util.COL * Util.SIZE
   const circ = new Circuits(canvas)
-  // console.log(circ.board.currentPiece)
-  
-
+  const scoreDisplay = document.querySelector("#score")
 })

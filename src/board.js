@@ -6,91 +6,213 @@ import Node from "./node"
 
 export default class Board {
   constructor (ctx) {
+    
     this.grid = this.buildGrid();
+    this.score = 0;
     this.ctx = ctx;
     this.lists = [];
     this.currentPiece = new Piece();
+
+
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.placePiece()
+    // this.currentPiece = new Piece();
+    // this.currentPiece.moveRight()
+    // this.currentPiece.rotatePiece()
+    // this.placePiece()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.rotatePiece()
+    // this.placePiece()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.moveRight()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.placePiece()
+    // this.animatedDeletion(this.lists[0])
+    
+    // this.placePiece()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.rotatePiece()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.currentPiece.moveDown()
+    // this.placePiece()
+    // console.log(this.lists[0].head )
+    // console.log(this.lists[0].tail)
     this.drawCurrentPiece()
-    // let l = this.createList()
-    // let n = new Node([3,2], "corner", 0)
-    // l.unshift(n)
-    // this.drawCurrentPiece();
-    // this.node = new Node([3,1], "bar", 2)
-    // console.log(this.node)
-    // this.lookForEligbleNeighbor(this.node)
-    // console.log(this.lists)
-    // this.moveIn(this.node)
-  }
-  
-  
-  lookForEligbleNeighbor(node){
-    let weAreDoneHere = false;
-    let result;
-    console.log("checking out my neighbors")
-    if (this.lists.length === 0) return ['','']
-    this.lists.forEach((list, i)=>{
-      result = [list, ""]
-      if ((this.checkEquality(node.link1, list.head.pos) && (this.checkEquality(list.head.link1, node.pos) || this.checkEquality(list.head.link2, node.pos))) || 
-      (this.checkEquality(node.link2, list.head.pos) && (this.checkEquality(list.head.link1, node.pos) || this.checkEquality(list.head.link2, node.pos)))&& !weAreDoneHere ) {
-        console.log("this should be the head") ;
-        result[1] += "head";
-        if (list.size === 1) {
-          weAreDoneHere = true;
-          return result;
-        }
-      }
-       if ((this.checkEquality(node.link1, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2, node.pos))) ||
-      (this.checkEquality(node.link2, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2,  node.pos)))  && !weAreDoneHere ) {
-        result[1] += "tail"
-        console.log("this should be the tail")
-      } 
-    })
-    return result;
+    // this.lists.forEach((list) =>{
+      //   console.log("next list")
+      //   list.printlist()
+      // })
+      
+      
+      // let n = new Node([3,2], "corner", 0)
+      // let l = this.createList(n)
+      // this.drawCurrentPiece();
+      // this.node = new Node([3,1], "bar", 2)
+      // console.log(this.node)
+      // this.countEligbleNeighbors(this.node)
+      // console.log(this.lists)
+      // this.moveIn(this.node)
   }
 
+  checkFullCircuit(){
+    for(let i = 0; i < this.lists.length; i++) {
+      let list = this.lists[i]
+      // console.log(list)
+      if (this.checkNodes(list.head, list.tail)){
+        this.score += list.size*10
+        const scoreDisplay = document.querySelector("#score")
+        scoreDisplay.innerHTML = this.score
+        this.animatedDeletion(list)
+        list.delete()
+        this.lists = this.lists.filter((list)=> list.head)
+      }
+    }
+  }
+
+  animatedDeletion(list){
+    //console.log(list)
+
+    let n = 0
+    list.each((pos)=>{
+      let x, y;
+      [x,y] = pos
+      n++
+      this.grid[x][y] = 0
+      setTimeout(()=>this.clearCell(x,y), n*50)
+    })
+    // list.slowEach((x,y)=>{
+    //   this.clearCell(x,y)
+    // })
+
+
+
+
+    // list.slowEach((x,y)=>{
+    //   console.log(x)
+    //   // let x, y;
+    //   // [x,y] = pos
+    //   console.log(this.clearCell)
+    //   setTimeout(this.clearCell(x, y), 400)
+      // this.clearCell(x, y)
+    // })
+  }
+
+
+  
+
+  returnEligbleNeighbors(node){
+    let toDoList = []
+    let count = 0;
+    if (this.lists.length === 0) {
+      return []
+    };
+
+    for (let i = 0; i < this.lists.length; i++) {
+      let list = this.lists[i]
+      if (this.checkHead(list, node) && !this.checkTail(list, node)) {
+        toDoList.push([list, "head"])
+        count += 1
+      } else if (this.checkTail(list, node) && !this.checkHead(list, node)) {
+        toDoList.push([list, "tail"])
+        count += 1
+      } else if (this.checkHead(list, node)) {
+        toDoList.push([list, 'head'])
+        count += 1
+      } else if (this.checkTail(list, node)) {
+        toDoList.push([list, "tail"])
+        count += 1
+      } 
+    }
+
+    return toDoList;
+  }
+
+        
   moveIn(node) {
+    let neighbors = this.returnEligbleNeighbors(node)
+
+    if (neighbors.length === 0) {
+      this.createList(node)
+    } else if (neighbors.length === 1) {
+      this.singleMove(node, neighbors[0])
+    } else {
+      this.manyMoves(node, neighbors)
+    }
+    // this.lists[0].printList()
+    
+    // console.log(["number of lists in this.list:",this.lists.length])
+    // console.log(this.lists)
+  }
+  manyMoves(node, resultArray){
+    this.singleMove(node, resultArray[0])
+    let list1 = resultArray[0][0]
+    let list2 = resultArray[1][0]
+    console.log(list1, list2);
+
+    if (resultArray[0][1] === resultArray[1][1] && resultArray[0][1] === "tail"){
+      list1.reverse()
+    } else if (resultArray[0][1] === resultArray[1][1] && resultArray[0][1] === "head"){
+      list2.reverse()
+    }
     // debugger
-    let result = this.lookForEligbleNeighbor(node)
+    list2.combineLists(list1)
+    this.lists = this.lists.filter((list)=> list.head)
+
+  }
+
+  singleMove(node, result) {
     let checker = result[1]
     let list = result[0]
-      switch (checker) {
-        case "head":
-          console.log("making a head")
-          list.unshift(node)
-          break;
-        case "tail":
-          console.log("making a tail")
-          list.unshift(node)
-          break;
-        case "headtail":
-          console.log("OH SHIT OH SHIT OH SHIT")
-          // make node new head
-          //reverse list w/ that head
-          // make join to the other list
-          break;
-        case "": 
-        console.log(this.lists[this.lists.length])
-        console.log("making my own list, bioch")
+    switch (checker) {
+      case "head":
+        // console.log("making a head")
+        list.unshift(node)
+        break;
+      case "tail":
+        // console.log("making a tail")
+        list.push(node)
+        break;
+      case undefined: 
+
+        // console.log("making my own list")
         let l = this.createList()
         l.push(node)
-        
         break;
     }
-    console.log(this.lists)
-    console.log(["number of lists in this.list:",this.lists.length])
   }
 
+
   
-  
+              
+              
+              
   placePiece(){
     if (this.validPos()) {
+      // console.log("Im beginning to place this piece, it's an ugly one, so listen up! I will only say this once!")
       // let l = this.createList()
       this.currentPiece.pieceShapeArray.forEach((row, x)=>{
         row.forEach((cell, y)=>{
-          const gridX = (this.currentPiece.x + x - 1)
-          const gridY = (this.currentPiece.y + y - 1)
-          if (cell.type !== null) {
+          const gridX = (this.currentPiece.x + x )
+          const gridY = (this.currentPiece.y + y )
+          if (cell.type !== "empty") {
             let node = new Node([gridX, gridY], cell.type, cell.rotation)
+            
             this.moveIn(node)
             this.grid[gridX][gridY] = JSON.parse(JSON.stringify(cell))
           }
@@ -98,25 +220,32 @@ export default class Board {
       })
       this.clearCurrentPiece()
       this.drawPlacedPieces()
-      
+      this.checkFullCircuit()
+      this.currentPiece = new Piece ()
+      this.drawCurrentPiece()
       // console.table(this.grid)
       // console.log(this.lists)
       
-      // this.consolidateLists()
-      this.currentPiece = new Piece ()
-      this.drawCurrentPiece()
-      
     }
   }
-  
+
+  indbouds(x,y){
+    if ( x < Util.ROW && x > 1 && y < Util.COL && y > 1) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
   validPos(){
     let moveForward = true;
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
-        const gridX = (this.currentPiece.x + x - 1)
-        const gridY = (this.currentPiece.y + y -1 )
+        const gridX = (this.currentPiece.x + x )
+        const gridY = (this.currentPiece.y + y  )
         const tempCell = this.grid[gridX][gridY]
-        if ( cell.type !== null) {
+        if ( cell.type !== "empty") {
           if (tempCell !== 0) {
             moveForward = false;
           }
@@ -125,13 +254,13 @@ export default class Board {
     })
     return moveForward;
   }
-
+  
   drawCurrentPiece() {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
         if (cell !== 0) {
-          const gridX = (this.currentPiece.x + x - 1)
-          const gridY = (this.currentPiece.y + y - 1)
+          const gridX = (this.currentPiece.x + x )
+          const gridY = (this.currentPiece.y + y )
           // console.log([gridX,gridY])
           this.drawCell(cell.type, cell.rotation, gridX, gridY, "current")
         }
@@ -143,8 +272,8 @@ export default class Board {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
       row.forEach((cell, y)=>{
         if (cell !== 0) {
-          const gridX = (this.currentPiece.x + x - 1)
-          const gridY = (this.currentPiece.y + y - 1)
+          const gridX = (this.currentPiece.x + x )
+          const gridY = (this.currentPiece.y + y )
           // console.log([gridX,gridY])
           this.clearCell( gridX, gridY)
         }
@@ -195,93 +324,17 @@ export default class Board {
               clearCell(x, y) {
                 this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
               }
-              ///////////////////////////////////////////////////
-              ////////methods relating to the linked list////////
-              ///////////////////////////////////////////////////
-              createList() {
-                let list = new LinkedList()
-                this.lists.push(list)
-                return list;
-              }
-              
-              // consolidateLists() {
-                //   console.log("starting to consolodate")
-                
-                //   // debugger
-                //   let defNoMoreMatches = false;
-                //   while (!defNoMoreMatches) {
-                  //     defNoMoreMatches = true;
-                  //     let weAreDoneHere = false;
-                  //     this.lists.forEach((list, listDex)=>{
-                    //       for (let i = 0; i < this.lists.length; i++) {
-                      //         // head to head links or tail to head
-                      //         console.log('hodor')
-                      //         if ( list.head && this.lists[i].head && list.tail && this.lists[i].tail &&
-                      //           (JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].head.link1) || 
-                      //             JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].head.link2) ||
-                      //             JSON.stringify(list.tail.pos) === JSON.stringify(this.lists[i].tail.link1) ||
-  //             JSON.stringify(list.tail.pos) === JSON.stringify(this.lists[i].tail.link2)) && 
-  //             !weAreDoneHere) {
-    //           if (list.head === this.lists[i].head ) {
-      //             console.log("DONT BITE YOUR OWN TAIL")
-      //           } else {
-        //             console.log("head to head, or tail to tail, as it was meant to be")
-        //             this.lists[listDex].reverse()
-        //             this.joinLists(listDex, i)
-        //             weAreDoneHere = true;
-        //             defNoMoreMatches = false;
-        //           }
-        //         } else if ( list.head && this.lists[i].head && list.tail && this.lists[i].tail &&
-        //                   (JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].tail.link1) ||
-        //                   JSON.stringify(list.head.pos) === JSON.stringify(this.lists[i].tail.link2)) && 
-        //                   !weAreDoneHere) {
-          //           if (list.head === this.lists[i].head) {
-            //             console.log("DONT BITE YOUR OWN TAIL")
-            //           } else {
-              //             console.log("head to tail, as god intended")
-              //             // console.log(this.lists[listDex])
-              //             // console.log(this.lists[i])
-  //             this.joinLists(listDex, i)
-  //             weAreDoneHere = true;
-  //             defNoMoreMatches = false;
-  
-  //           }
-  //         }
-  //       }
-  //     })
-  
-  //   }
-  //   console.log(["number of lists in this.list:",this.lists.length])
-  //   console.log(this.lists)
-  //   // this.lists.forEach((list) => list.printlist())
-  // }
-  
-  joinLists(index1, index2){
-    console.log("in join lists")
-    this.lists[index2].combineLists(this.lists[index1])
-    this.lists = this.lists.filter((list)=> list.head)
-    console.log(this.lists)
-    
+  ///////////////////////////////////////////////////
+  ////////methods relating to the linked list////////
+  ///////////////////////////////////////////////////
+  createList(node) {
+    let list = new LinkedList()
+    list.push(node)
+    this.lists.push(list)
+    return list;
   }
-  // consolidateLists() {
-    //   let weAreDoneHere = false;
-    //   let termini = this.buildTerminiArray()
-    //   // termini is an array of objects, which have a 'terminiType', a 'node', and and 'listIndex' which refers to this.lists
-    
-    
-    //   termini
-    
-    //   console.log(this.lists)
-    // }
-    // buildTerminiArray(){
-      //   let termini = [];
-      //   this.lists.forEach((list, listIndex)=> {
-  //     termini.push({node: list.getLastNode(), terminiType: "tail", listIndex: listIndex})
-  //     termini.push({node: list.head, terminiType: "head", listIndex: listIndex})
-  //   })
-  //   return termini
-  // }
   
+
   buildGrid(){
     const grid = []
     for (let i = 0; i < Util.ROW; i++) {
@@ -290,10 +343,31 @@ export default class Board {
     return grid
   }
   checkEquality(thing1, thing2) {
-    if ((JSON.stringify(thing1) === JSON.stringify(thing2)) === true) {
+    return JSON.stringify(thing1) === JSON.stringify(thing2);
+  }
+  checkHead(list, node){
+    return (this.checkEquality(node.link1, list.head.pos) && (this.checkEquality(list.head.link1, node.pos)
+    || this.checkEquality(list.head.link2, node.pos))
+    || (this.checkEquality(node.link2, list.head.pos) && (this.checkEquality(list.head.link1, node.pos)
+    || this.checkEquality(list.head.link2, node.pos)))) 
+  }
+
+  checkTail(list, node) {
+    if ((this.checkEquality(node.link1, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2, node.pos))) ||
+    (this.checkEquality(node.link2, list.tail.pos) && (this.checkEquality(list.tail.link1, node.pos) || this.checkEquality(list.tail.link2,  node.pos))) === true) {
       return true;
     } else {
-      return false;
+      return false
     }
   }
+  checkNodes(H, T) {
+    if (((this.checkEquality(T.link1, H.pos) && (this.checkEquality(H.link1, T.pos) || this.checkEquality(H.link2, T.pos))) ||
+        (this.checkEquality(T.link2, H.pos) && (this.checkEquality(H.link1, T.pos) || this.checkEquality(H.link2,  T.pos)))) === true) {
+      return true;
+    } else {
+      return false
+    }
+  }
+
 }
+      

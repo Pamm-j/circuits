@@ -5,12 +5,12 @@ const Types = {
   UP: function(x, y, ctx, status){ 
     if (status === "current") {
       ctx.fillStyle = Util.lightColor;
-    } else {
-          if (status === "current") {
-      ctx.fillStyle = Util.lightColor;
-    } else {
-      ctx.fillStyle = Util.darkColor;
-    }
+      } else {
+        if (status === "current") {
+        ctx.fillStyle = Util.lightColor;
+      } else {
+        ctx.fillStyle = Util.darkColor;
+      }
     }
     ctx.fillRect((x*Util.SIZE)+ Util.MARGIN, y*Util.SIZE, Util.GAUGE, Util.SIZE);
   },

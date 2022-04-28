@@ -53,33 +53,48 @@ export default class LinkedList {
     this.size++;
   }
 
-  // getLastNode() {
-  //   let current = this.head;
-  //   let count = 0;
-
-  //   while (current) {
-  //     if (count === this.size-1) {
-  //       return current
-  //     }
-  //     count++;
-  //     current = current.next
-  //   }
-  // }
 
   delete(){
     this.head = null
     this.size = 0
   }
-  printlist(){
+  printList(){
     let current = this.head;
     let count = 0;
     while (count < this.size) {
-      console.log([current.pos, current.name])
+      console.log([current.pos[0], current.pos[1], current.name])
       // console.log(current)
       current = current.next
       count++;
     }
   }
+
+  
+  slowEach(callback){
+    let current = this.head;
+    let count = 0;
+    while (count < this.size) {
+      let x, y;
+      [x,y] = current.pos
+      console.log(callback)
+      setTimeout(()=>callback(x, y), 1000)
+      current = current.next
+      count++;
+    }
+  }
+
+
+  each(callback){
+    let current = this.head;
+    let count = 0;
+    while (count < this.size) {
+      callback(current.pos)
+      // console.log(current)
+      current = current.next
+      count++;
+    }
+  }
+
   combineLists(list){
     let last = this.tail
     last.next = list.head
@@ -103,7 +118,6 @@ export default class LinkedList {
       current.next = prev;
       prev = current;
       current = next;
-      console.log('hodor')
     }
     this.head = prev;
   }

@@ -17,6 +17,7 @@
 
 #work-bench {
   background-image: url("https://www.textures.com/system/gallery/photos/Wood/Fine%20Wood/121471/WoodFine0058_30_350.jpg");
+  border: 10px solid blue;
 }
 
 .title {
