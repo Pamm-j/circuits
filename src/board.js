@@ -48,6 +48,7 @@ export default class Board {
     ctx.fillStyle = "#4F190D";
     ctx.fillRect(Util.SIZE*Util.ROW+5, 5, Util.SIZE - 10, Util.SIZE*Util.COL - 10);
   }
+  
 
   animatedDeletion(list){
     let n = 0
