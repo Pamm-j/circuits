@@ -29,10 +29,10 @@ export default class Board {
   }
 
   resetTimer(){
-    this.drawTimerBox(this.ctx)
-    if (this.timer) this.timer.stop()
-    this.timer = new Timer(15000, this.score*(.01))
-    this.timer.start(this.ctx)
+    // this.drawTimerBox(this.ctx)
+    // if (this.timer) this.timer.stop()
+    // this.timer = new Timer(15000, this.score*(.01))
+    // this.timer.start(this.ctx)
   }
 
   checkFullCircuit(){
@@ -105,7 +105,6 @@ export default class Board {
         
   moveIn(node) {
     let neighbors = this.returnEligbleNeighbors(node)
-
     if (neighbors.length === 0) {
       this.createList(node)
     } else if (neighbors.length === 1) {
@@ -258,13 +257,13 @@ export default class Board {
                   case 1:
                     Types.SIDE(x, y, this.ctx, status);
                     break;
-                  }
-                }
-              }
+      }
+    }
+  }
               
-              clearCell(x, y) {
-                this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
-              }
+  clearCell(x, y) {
+    this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
+  }
 
 
   createList(node) {

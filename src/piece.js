@@ -12,18 +12,20 @@ export default class Piece {
 
 
   getRandomShape() {
-    let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
-    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
-    "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
-    "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
-    "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
-    "tallZee", "tallZee", "tallZee", "tallZee"]
-    // let shapes = [ "uShape"]
-    return shapes[Math.floor(Math.random()*shapes.length)];
+    let easyShapes = [`shortCorner`,`shortLine`]
+    let mediumShapes = [`tallCorner`, `tallLine`,`leftZee`,`rightZee`,`ohm`,`leftEle`, `rightEle`, `uShape`]
+    let hardShapes = [ `waitWhat`,`tallZee`,]
+    let rando = Math.floor(Math.random()*1000)
+    if (rando < 500 ){
+      rando = (rando % easyShapes.length)
+      return easyShapes[rando]
+    } else if ( rando < 900) {
+      rando = (rando % mediumShapes.length)
+      return mediumShapes[rando]
+    } else {
+      rando = (rando % hardShapes.length)
+      return hardShapes[rando]
+    }
   }
 
   buildpieceShapeArray(name){
