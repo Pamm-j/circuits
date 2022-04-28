@@ -12,14 +12,25 @@ export default class Board {
     this.ctx = ctx;
     this.lists = [];
     this.currentPiece = new Piece();
-    this.drawCurrentPiece()
+    this.changePiece()
+    this.nextPiece = this.currentPiece.getRandomShape()
     this.resetTimer()
+  }
+
+  changePiece(){
+    const toBeDrawn = this.nextPiece 
+    this.nextPiece = this.currentPiece.getRandomShape()
+    const nextPiece = document.querySelector("#next-piece")
+    console.log(this.nextPiece)
+    nextPiece.innerHTML = this.nextPiece
+    this.currentPiece = new Piece(toBeDrawn)
+    this.drawCurrentPiece()
   }
 
   resetTimer(){
     this.drawTimerBox(this.ctx)
     if (this.timer) this.timer.stop()
-    this.timer = new Timer(5000)
+    this.timer = new Timer(15000, this.score*(.01))
     this.timer.start(this.ctx)
   }
 
@@ -139,7 +150,13 @@ export default class Board {
     }
   }
 
-
+  reset(){
+    this.clearCurrentPiece()
+    this.drawPlacedPieces()
+    this.checkFullCircuit()
+    this.changePiece()
+    this.resetTimer()
+  }
   
               
               
@@ -158,22 +175,8 @@ export default class Board {
           }
         })
       })
-      this.clearCurrentPiece()
-      this.drawPlacedPieces()
-      this.checkFullCircuit()
-      this.currentPiece = new Piece ()
-      this.resetTimer()
-      this.drawCurrentPiece() 
+      this.reset()
     }
-  }
-
-  indbouds(x,y){
-    if ( x < Util.ROW && x > 1 && y < Util.COL && y > 1) {
-      return true;
-    } else {
-      return false;
-    }
-
   }
 
   validPos(){
@@ -258,16 +261,14 @@ export default class Board {
               clearCell(x, y) {
                 this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
               }
-  ///////////////////////////////////////////////////
-  ////////methods relating to the linked list////////
-  ///////////////////////////////////////////////////
+
+
   createList(node) {
     let list = new LinkedList(node)
     this.lists.push(list)
     return list;
   }
   
-
   buildGrid(){
     const grid = []
     for (let i = 0; i < Util.ROW; i++) {

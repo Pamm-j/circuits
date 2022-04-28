@@ -1,40 +1,30 @@
-import { setIn } from "immutable";
 import Util from "./util";
 
 export default class Timer {
-  constructor(time) {
+  constructor(time, decrement) {
     this.time = time
-    this.interval;
-    this.velocity = 0;
-    // this.dimensions = dimensions;
-    this.x = Util.SIZE*Util.ROW
-    this.y = 0
+    this.maxTime = time
+    this.decrement = decrement
+    this.timeUp = false
   }
 
   drawTimer(ctx){
     ctx.fillStyle = "#9E714E";
-    ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL*((5000-this.time)/5000));
+    ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL*((this.maxTime-this.time)/this.maxTime));
   }
 
-  move() {
-    this.y += Util.gravity;
-  }
-
-  animateTimer(ctx){
-    this.move();
-    this.drawTimer(ctx)
-  }
 
   start(ctx){
     this.interval = setInterval(()=>{
       this.drawTimer(ctx)
-      console.log(this.time)
-      if (this.time === -500) {
+      if (this.time === -10) {
         clearInterval(this.interval)
+        this.timeUp = true;
         alert("game over")
       }
-      this.time -= 500
-    }, 500)
+      this.time -= (10 + this.decrement)
+    }, 10 )
+    console.log(10 - this.decrement)
   }
 
   stop(){

@@ -6,7 +6,7 @@ const Util = {
   MARGIN: 12,
   darkColor: "brown",
   lightColor: "orange",
-  gravity: 0.3
+  startingTime: 15000
 } 
 
 export default Util;

@@ -33,7 +33,7 @@ export default class Circuits {
 
   start() {
     board = new Board(this.ctx)
-    let timer = new Timer()
+    // let timer = new Timer()
   }
 
   play(){

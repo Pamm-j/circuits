@@ -1,39 +1,28 @@
 import Util from "./util"
 import Cell from "./cell"
 import Shapes from "./shapes"
-// import * as Types from "./types"
-
 
 export default class Piece {
-  constructor () {
+  constructor (name) {
     this.x = 2
     this.y = 2 
-    if (!this.currentShape) this.currentShape = this.generateRandomShapeName()
-    this.pieceShapeArray = this.buildpieceShapeArray(this.currentShape)
+    if (!name) name = this.getRandomShape()
+    this.pieceShapeArray = this.buildpieceShapeArray(name)
   }
 
-  getRandomShape(){
-    
-    const nextShape = this.currentShape
-    this.currentShape = this.generateRandomShapeName()
-    const nextPiece = document.querySelector("#next-piece")
-    nextPiece.innerHTML = this.currentShape
-    return nextShape
-  }
 
-  generateRandomShapeName() {
-    // let shapes = Object.keys(Shapes)
-    let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
-    "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
-    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
-    "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
-    "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
-    "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
-    "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
-    "tallZee", "tallZee", "tallZee", "tallZee"]
-    // let shapes = [ "lShape"]
+  getRandomShape() {
+    // let shapes = ["shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    // "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", "shortCorner", 
+    // "tallCorner", "tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner","tallCorner",
+    // "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    // "shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine","shortLine",
+    // "tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine","tallLine", 
+    // "lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape","lShape",
+    // "uShape",  "uShape", "uShape",  "uShape",  "uShape",  "uShape", "uShape",  "uShape",  "uShape", 
+    // "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee", "shortZee",
+    // "tallZee", "tallZee", "tallZee", "tallZee"]
+    let shapes = [ "uShape"]
     return shapes[Math.floor(Math.random()*shapes.length)];
   }
 
