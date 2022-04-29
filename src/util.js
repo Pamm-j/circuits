@@ -1,5 +1,5 @@
 const Util = {
-  ROW: 15, 
+  ROW: 17, 
   COL: 8,
   SIZE: 40,
   GAUGE: 16,

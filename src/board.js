@@ -9,7 +9,6 @@ export default class Board {
   constructor (ctx) {
     this.grid = this.buildGrid();
     this.score = 0;
-    this.highScore = 0;
     this.ctx = ctx;
     this.lists = [];
     this.currentPiece = new Piece();
@@ -41,11 +40,8 @@ export default class Board {
       let list = this.lists[i]
       if (this.checkNodes(list.head, list.tail) && list.size > 3){
         this.score += list.size*10
-        if (this.score > this.highScore) this.highScore = this.score
         const scoreDisplay = document.querySelector("#score")
         scoreDisplay.innerHTML = this.score
-        const highScoreDisplay = document.querySelector("#high-score")
-        highScoreDisplay.innerHTML = this.highScore
         this.animatedDeletion(list)
         list.delete()
         this.lists = this.lists.filter((list)=> {

@@ -12,14 +12,18 @@ export default class Piece {
 
 
   getRandomShape() {
-    let easyShapes = [`shortCorner`,`shortLine`]
-    let mediumShapes = [`tallCorner`, `tallLine`,`leftZee`,`rightZee`,`ohm`,`leftEle`, `rightEle`, `uShape`]
+    let basicShapes = [`shortCorner`,`shortLine`]
+    let easyShapes =  [ `tallCorner`, `tallLine` ]
+    let mediumShapes = [`leftZee`,`rightZee`,`ohm`,`leftEle`, `rightEle`, `uShape`]
     let hardShapes = [ `waitWhat`,`tallZee`,]
     let rando = Math.floor(Math.random()*1000)
-    if (rando < 550 ){
+    if (rando < 500 ){
+      rando = (rando % basicShapes.length)
+      return basicShapes[rando]
+    } else if (rando < 750) {
       rando = (rando % easyShapes.length)
       return easyShapes[rando]
-    } else if ( rando < 950) {
+    } else if ( rando < 955) {
       rando = (rando % mediumShapes.length)
       return mediumShapes[rando]
     } else {

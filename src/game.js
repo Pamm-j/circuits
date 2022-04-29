@@ -4,6 +4,7 @@ import Timer from "./timer";
 let board = {};
 export default class Circuits {
   constructor(canvas){
+    this.highScore = 0;
     this.ctx = canvas.getContext("2d");
     this.dimensions = { width: canvas.width, height: canvas.height };
     this.play();
@@ -32,7 +33,14 @@ export default class Circuits {
   } 
 
   start() {
-    board = new Board(this.ctx)
+    addEventListener("click", ()=> {
+      
+      const open = document.getElementById("opening")
+      open.style.display = "none"
+    
+      board = new Board(this.ctx)
+    })
+   
     // let timer = new Timer()
   }
 

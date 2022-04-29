@@ -1,27 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Notable&display=swap');
 
-.sub-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 650px;
+body {
+  font-family: "Gruppo";
+  color: white;
+}
+
+#opening {
+  font-family: "Allerta Stencil";
+  font-size: 75px;
+  color: orange;
+  text-align: center;
+  vertical-align: middle;
+  position: fixed;
+  top: 240px;
+
+}
+
+#instructions {
+  width: 300px;
+}
+
+#instructions div {
+  font-size: 18px;
+  width: 280px;
+}
+body {
+  background-image: url("img_tree.gif"), url("paper.gif");
+  background-repeat: no-repeat, repeat;
+  background-color: #cccccc;
 }
 
 .info {
   margin-top: 5px;
-  width: 650px;
   height: 110px;
+  width: 720px;
+  /* background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4"); */
+
   /* background-image: url("https://i.pinimg.com/236x/0d/bb/de/0dbbde9a5031d1461c733b9b576a24e3--kitchen-countertops-kitchen-backsplash.jpg"); */
   background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
   display: flex;
   justify-content: space-between;
-  border: 5px solid black;
+  border: 5px solid #0e0e0e;
 }
 
 #timer {
   margin-top: 5px;
   width: 285px;
   height: 110px;
-  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
   display: flex;
   justify-content: space-between;
   border: 5px solid black;
@@ -36,29 +61,47 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
+.info div {
+  box-shadow: 3px -px -2px rgb(158,113,78);
+  /* border: solid 1px brown; */
+  border-radius: 20px;
 }
 
 .info div div {
+  font-size: 30px;
   display: table-cell;
   width: 180px;
   height: 70px;
   vertical-align: middle;
   /* background-image: url("https://i.pinimg.com/236x/0d/bb/de/0dbbde9a5031d1461c733b9b576a24e3--kitchen-countertops-kitchen-backsplash.jpg"); */
-  background-color: black;
+  background-color: #242c1e;
 }
 
 #work-bench {
-  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4");
-  border: 5px solid black;
+  /* background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4"); */
+  border: 5px solid #0e0e0e;
   /* background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg"); */
   padding: 0px;
   box-sizing: border-box;
+  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
+
 }
 
 .title {
-  font-size: 100px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Allerta Stencil";
+  font-size: 120px;
+  color: orange;
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  h1 {
+    -webkit-text-stroke: 1px #242c1e;
+    -webkit-text-fill-color: orange;
+  }
 }
 
 .container {
@@ -67,10 +110,21 @@
   align-content: center;
   align-items: center;
 }
-
-h3 {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+#body {
+  
+  background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg");
 }
+
+#story {
+  color: orange;
+  font-size: 30px;
+  background-color: #242c1e;
+  width: 730px;
+  text-align: center;
+  font-family: "Allerta Stencil";
+}
+
+
 
 
 

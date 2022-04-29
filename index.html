@@ -4,24 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="dist/main.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Allerta Stencil' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Gruppo' rel='stylesheet'>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/reset.css">
     <title>Circuits</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
-    <div class="container">
+  <body id="body">
+      
+    <div class="container"> 
+    
       <h1 class="title">Circuits</h1>
-      <h3>Complete the Circuits before the time runs out!</h3>
-      <h3>press 's' to set | press 'd' to rotate</h3>
-      <canvas id="work-bench"></canvas>
-
+      <!-- <h3 id="story">Complete the Circuits before the time runs out!</h3> -->
+      <div id="canvas-wrapper">
+      <canvas id="work-bench"></canvas></div>
+      <div id="opening">Click to Start</div>
       <div class="sub-container">
         <div class="info">
-          <div><h2>Score:      <div id="score">     0</h2></div>
-          <div><h2>High Score: <div id="high-score">0</h2></div>
-          <div><h2>Next Piece: <div id="next-piece"> </h2></div>
+          <div><h2>Current Score: <div id="score">     0</h2></div>
+          <div id="instructions"><h2>Instructions<div>press 's' to set <br> press 'd' to rotate <br> use cursor keys to move</h2></div>
+          <div><h2>Next Piece:    <div id="next-piece"> </h2></div>
         </div>
       </div>
       
