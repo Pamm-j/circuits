@@ -1,11 +1,9 @@
 import Util from "./util";
 
 export default class Timer {
-  constructor(time, decrement) {
+  constructor(time) {
     this.time = time
     this.maxTime = time
-    this.decrement = decrement
-    this.timeUp = false
   }
 
   drawTimer(ctx){
@@ -17,14 +15,12 @@ export default class Timer {
   start(ctx){
     this.interval = setInterval(()=>{
       this.drawTimer(ctx)
-      if (this.time === -10) {
+      if (this.time < 0 ) {
         clearInterval(this.interval)
-        this.timeUp = true;
         alert("game over")
       }
-      this.time -= (10 + this.decrement)
+      this.time -= (10)
     }, 10 )
-    console.log(10 - this.decrement)
   }
 
   stop(){

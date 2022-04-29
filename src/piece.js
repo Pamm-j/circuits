@@ -16,10 +16,10 @@ export default class Piece {
     let mediumShapes = [`tallCorner`, `tallLine`,`leftZee`,`rightZee`,`ohm`,`leftEle`, `rightEle`, `uShape`]
     let hardShapes = [ `waitWhat`,`tallZee`,]
     let rando = Math.floor(Math.random()*1000)
-    if (rando < 500 ){
+    if (rando < 550 ){
       rando = (rando % easyShapes.length)
       return easyShapes[rando]
-    } else if ( rando < 900) {
+    } else if ( rando < 950) {
       rando = (rando % mediumShapes.length)
       return mediumShapes[rando]
     } else {

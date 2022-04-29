@@ -22,17 +22,18 @@ export default class Board {
     const toBeDrawn = this.nextPiece 
     this.nextPiece = this.currentPiece.getRandomShape()
     const nextPiece = document.querySelector("#next-piece")
-    console.log(this.nextPiece)
     nextPiece.innerHTML = this.nextPiece
     this.currentPiece = new Piece(toBeDrawn)
     this.drawCurrentPiece()
   }
 
   resetTimer(){
-    // this.drawTimerBox(this.ctx)
-    // if (this.timer) this.timer.stop()
-    // this.timer = new Timer(15000, this.score*(.01))
-    // this.timer.start(this.ctx)
+    this.drawTimerBox(this.ctx)
+    if (this.timer) this.timer.stop()
+    let time = 15000 - this.score
+    console.log(time)
+    this.timer = new Timer(time)
+    this.timer.start(this.ctx)
   }
 
   checkFullCircuit(){

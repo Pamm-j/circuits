@@ -49,9 +49,9 @@
 }
 
 #work-bench {
-  /* background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4"); */
+  background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4");
   border: 5px solid black;
-  background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg");
+  /* background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg"); */
   padding: 0px;
   box-sizing: border-box;
 }
