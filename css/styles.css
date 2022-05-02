@@ -57,6 +57,7 @@ body {
   width: 200px;
   height: 100px;
   background-image: url("https://mycraftsource.com/images/P/StarCraft-Brushed-Copper-250.jpg");
+  background-size: 100% auto;
   text-align: center;
   display: flex;
   flex-direction: row;
@@ -111,8 +112,8 @@ body {
   align-items: center;
 }
 #body {
-  
   background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg");
+  background-size: 100% auto;
 }
 
 #story {
