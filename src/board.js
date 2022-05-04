@@ -29,8 +29,7 @@ export default class Board {
   resetTimer(){
     this.drawTimerBox(this.ctx)
     if (this.timer) this.timer.stop()
-    let time = 15000 - this.score
-    console.log(time)
+    let time = 15000 - this.score*2
     this.timer = new Timer(time)
     this.timer.start(this.ctx)
   }

@@ -13,7 +13,6 @@ body {
   vertical-align: middle;
   position: fixed;
   top: 240px;
-
 }
 
 #instructions {
@@ -83,13 +82,14 @@ body {
 }
 
 #work-bench {
+
   /* background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcHg4NDEzNjMtaW1hZ2Uta3d2eGZqdXEuanBn.jpg?s=dbCDt02xyXrkdqRyVz7JI8eoY0YKrMkv32-Y5mce9q4"); */
   border: 5px solid #0e0e0e;
   /* background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg"); */
   padding: 0px;
   box-sizing: border-box;
   background-image: url("https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0xODctbnVubnktNTIuanBn.jpg?s=UUhlsRaNLZ1Kv5nGp01Nb8AyXw--FbbQdSX2902zly8");
-
+  /* display: none; */
 }
 
 .title {
@@ -113,6 +113,7 @@ body {
 }
 #body {
   background-image: url("https://glescrap.com/wp-content/uploads/2021/10/AdobeStock_65764407-1024x681.jpeg");
+  /* background-image: url("https://t3.ftcdn.net/jpg/03/01/47/76/360_F_301477670_ExKhH9QKazMDDzSdxBP9xtE7cIakGZ8L.jpg"); */
   background-size: 100% auto;
 }
 
