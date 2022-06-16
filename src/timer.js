@@ -26,4 +26,16 @@ export default class Timer {
   stop(){
     clearInterval(this.interval)
   }
+
+  pause(){
+    let timeLeft = this.time
+    this.stop()
+    console.log(timeLeft)
+  }
+  unpause(ctx){
+    this.start(ctx)
+    // let timeLeft = this.time
+    // this.stop()
+    // console.log(timeLeft)
+  }
 }

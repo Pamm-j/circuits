@@ -26,6 +26,8 @@ export default class Circuits {
         board.currentPiece.moveDown(board.ctx)
       } else if (e.keyCode === 68) {
         board.currentPiece.rotatePiece(board.ctx)
+      } else if (e.keyCode === 32) {
+        board.togglePause()
       }
       board.drawPlacedPieces()
       board.drawCurrentPiece()

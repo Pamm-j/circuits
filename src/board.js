@@ -15,6 +15,7 @@ export default class Board {
     this.changePiece()
     this.nextPiece = this.currentPiece.getRandomShape()
     this.resetTimer()
+    this.pause = false;
   }
 
   changePiece(){
@@ -34,6 +35,24 @@ export default class Board {
     this.timer.start(this.ctx)
   }
 
+  drawTimerBox(ctx) {
+    ctx.fillStyle = "#9E714E";
+    ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL);
+    ctx.fillStyle = "#4F190D";
+    ctx.fillRect(Util.SIZE*Util.ROW+5, 5, Util.SIZE - 10, Util.SIZE*Util.COL - 10);
+  }
+
+  togglePause(){
+    if (!this.pause) {
+      this.timer.pause()
+    } else {
+      this.timer.unpause(this.ctx)
+    }
+    
+    this.pause = !this.pause
+  }
+  
+
   checkFullCircuit(){
     for(let i = 0; i < this.lists.length; i++) {
       let list = this.lists[i]
@@ -52,14 +71,6 @@ export default class Board {
       }
     }
   }
-
-  drawTimerBox(ctx) {
-    ctx.fillStyle = "#9E714E";
-    ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL);
-    ctx.fillStyle = "#4F190D";
-    ctx.fillRect(Util.SIZE*Util.ROW+5, 5, Util.SIZE - 10, Util.SIZE*Util.COL - 10);
-  }
-  
 
   animatedDeletion(list){
     let n = 0
@@ -235,24 +246,24 @@ export default class Board {
         case 0:
           Types.NE(x, y, this.ctx, status);
           break;
-          case 3:
-            Types.SE(x, y, this.ctx, status);
-            break;
-            case 2:
-              Types.SW(x, y, this.ctx, status);
-              break;
-              case 1:
-                Types.NW(x, y, this.ctx, status);
-                break;
-              }
-            } else if (type === "bar") {
-              switch (rotation%2) {
-                case 0:
-                  Types.UP(x, y, this.ctx, status);
-                  break;
-                  case 1:
-                    Types.SIDE(x, y, this.ctx, status);
-                    break;
+        case 3:
+          Types.SE(x, y, this.ctx, status);
+          break;
+        case 2:
+          Types.SW(x, y, this.ctx, status);
+          break;
+        case 1:
+          Types.NW(x, y, this.ctx, status);
+          break;
+      }
+    } else if (type === "bar") {
+      switch (rotation%2) {
+        case 0:
+          Types.UP(x, y, this.ctx, status);
+          break;
+        case 1:
+          Types.SIDE(x, y, this.ctx, status);
+          break;
       }
     }
   }
