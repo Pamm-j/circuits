@@ -30,7 +30,6 @@ export default class Timer {
   pause(){
     let timeLeft = this.time
     this.stop()
-    console.log(timeLeft)
   }
   unpause(ctx){
     this.start(ctx)
