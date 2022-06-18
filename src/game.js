@@ -4,7 +4,6 @@ let board = startTest
 
 export default class Circuits {
   constructor(canvas, smallCanva){
-    this.highScore = 0;
     this.ctx = canvas.getContext("2d");
     this.smallctx = smallCanva.getContext("2d")
     this.dimensions = { width: canvas.width, height: canvas.height };
@@ -13,8 +12,7 @@ export default class Circuits {
   }
 
   action(e) {
-    // console.log(board.playing)
-    if (e.keyCode === 32 && board !== startTest) {
+    if (e.keyCode === 32 && board !== startTest && !board.timesUp) {
       board.togglePause(board.ctx)
     } else if (!board.pause && board !== startTest && board.playing === true) {
       if (e.keyCode === 83 ) {
@@ -40,26 +38,32 @@ export default class Circuits {
   } 
 
   play() {
-    addEventListener("click", ()=> {
-      const open = document.getElementById("opening")
-      open.style.display = "none"
-      board = new Board(this.ctx, this.smallctx)
-      board.clearGrid()
-      console.log(!board.timesUp)
-      board.drawPlacedPieces()
-      board.drawCurrentPiece()
-      board.resetTimer()
-    })
-
-
-    
+    board = new Board(this.ctx, this.smallctx)
+    let localHighScore = localStorage.getItem("highScore") 
+    let highScoreDiv = document.querySelector("#high-score")
+    if (typeof(localHighScore) === 'string' ) {
+      highScoreDiv.innerHTML = localHighScore
+      board.highScore = localHighScore
+    } else {
+      highScoreDiv = 0
+      board.highScore = 0
+    }
+    const canvas = document.getElementById('work-bench');
+    canvas.addEventListener("click", this.start, {once:true}) 
   }
 
+  
+  start(){
+    board.playing = true;
+    const open = document.getElementById("opening")
+    open.style.display = "none"
+    board.clearGrid()
+    board.drawPlacedPieces()
+    board.drawNextPiece()
+    board.drawCurrentPiece()
+    board.resetTimer()
+    // board.reset()
 
-  reset(){
-    while (!board.timesUp){
-      if (board.placePiece) board.reset()
-    }
   }
 
 }
