@@ -18,7 +18,6 @@ export default class Timer {
       if (this.time < 0 ) {
         clearInterval(this.interval)
         this.gameover()
-        // alert("game over")
       }
       this.time -= (10)
     }, 10 )
@@ -29,18 +28,9 @@ export default class Timer {
   }
 
   pause(){
-    console.log("pause")
-
-    let timeLeft = this.time
-    console.log(timeLeft)
     this.stop()
   } 
   unpause(ctx){
-    console.log("unpause")
-    console.log(this.time)
     this.start(ctx)
-    // let timeLeft = this.time
-    // this.stop()
-    // console.log(timeLeft)
   }
 }
