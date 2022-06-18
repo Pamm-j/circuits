@@ -30,19 +30,6 @@ export default class LinkedList {
     }
   }
 
-  
-  slowEach(callback){
-    let current = this.head;
-    let count = 0;
-    while (count < this.size) {
-      let x, y;
-      [x,y] = current.pos
-      setTimeout(()=>callback(x, y), 1000)
-      current = current.next
-      count++;
-    }
-  }
-
   each(callback){
     let current = this.head;
     let count = 0;

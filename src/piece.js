@@ -6,31 +6,37 @@ export default class Piece {
   constructor (name) {
     this.x = 2
     this.y = 2 
+    this.moveLeft = this.moveLeft.bind(this)
     if (!name) name = this.getRandomShape()
     this.pieceShapeArray = this.buildpieceShapeArray(name)
   }
 
-
   getRandomShape() {
-    let basicShapes = [ `shortCorner`,`shortLine` ]
-    let easyShapes =  [ `tallCorner`,`ohm`, `uShape` ]
-    let mediumShapes = [ `leftZee`,`rightZee`,`leftEle`, `rightEle`,`tallLine` ]
-    let hardShapes = [ `waitWhat`,`tallZee`]
-    let rando = Math.floor(Math.random()*1000)
-    if (rando < 500 ){
-      rando = (rando % basicShapes.length)
-      return basicShapes[rando]
-    } else if (rando < 750) {
-      rando = (rando % easyShapes.length)
-      return easyShapes[rando]
-    } else if ( rando < 955) {
-      rando = (rando % mediumShapes.length)
-      return mediumShapes[rando]
-    } else {
-      rando = (rando % hardShapes.length)
+   let hardShapes = [ `uShape`]
+   let rando = Math.floor(Math.random()*1000)
+         rando = (rando % hardShapes.length)
       return hardShapes[rando]
-    }
   }
+  // getRandomShape() {
+  //   let basicShapes = [ `shortCorner`,`shortLine` ]
+  //   let easyShapes =  [ `tallCorner`,`ohm`, `uShape` ]
+  //   let mediumShapes = [ `leftZee`,`rightZee`,`leftEle`, `rightEle`,`tallLine` ]
+  //   let hardShapes = [ `waitWhat`,`tallZee`]
+  //   let rando = Math.floor(Math.random()*1000)
+  //   if (rando < 500 ){
+  //     rando = (rando % basicShapes.length)
+  //     return basicShapes[rando]
+  //   } else if (rando < 750) {
+  //     rando = (rando % easyShapes.length)
+  //     return easyShapes[rando]
+  //   } else if ( rando < 955) {
+  //     rando = (rando % mediumShapes.length)
+  //     return mediumShapes[rando]
+  //   } else {
+  //     rando = (rando % hardShapes.length)
+  //     return hardShapes[rando]
+  //   }
+  // }
 
   buildpieceShapeArray(name){
     let pieceShapeArray = JSON.parse(JSON.stringify(Shapes[name]))

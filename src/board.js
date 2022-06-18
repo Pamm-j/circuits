@@ -6,33 +6,66 @@ import Node from "./node"
 import Timer from "./timer"
 
 export default class Board {
-  constructor (ctx) {
+  constructor (ctx, smallctx) {
     this.grid = this.buildGrid();
     this.score = 0;
     this.ctx = ctx;
+    this.smallctx = smallctx;
     this.lists = [];
     this.currentPiece = new Piece();
     this.changePiece()
     this.nextPiece = this.currentPiece.getRandomShape()
-    this.resetTimer()
     this.pause = false;
+    this.playing = true;
+    this.gameOver = this.gameOver.bind(this)
   }
 
   changePiece(){
     const toBeDrawn = this.nextPiece 
     this.nextPiece = this.currentPiece.getRandomShape()
-    const nextPiece = document.querySelector("#next-piece")
-    nextPiece.innerHTML = this.nextPiece
+    // const nextPiece = document.querySelector("#next-piece")
+    // nextPiece.innerHTML = this.nextPiece
+    let nextPieceShape = new Piece(this.nextPiece)
+    this.drawNextPiece(this.smallctx, nextPieceShape)
     this.currentPiece = new Piece(toBeDrawn)
     this.drawCurrentPiece()
   }
 
+  drawNextPiece(ctx, piece){
+    let gridX, gridY;
+    if (typeof piece === "object")
+    ctx.clearRect(0, 0, 300, 300)
+    piece.pieceShapeArray.forEach((row, x)=>{
+      row.forEach((cell, y)=>{  
+        if (cell.type !== 'empty') {
+          if (piece.pieceShapeArray.length < 3) {
+            gridX = (x + 2.75 )
+            gridY = (y + 1.25 )
+          } else {
+            gridX = (x + 2.25 )
+            gridY = (y + .75 )
+          }
+          this.drawCell(cell.type, cell.rotation, gridX, gridY, "current", ctx)
+        }
+      })
+    })
+  }
+  gameOver=()=> this.timesUp = true;
+  
   resetTimer(){
-    this.drawTimerBox(this.ctx)
-    if (this.timer) this.timer.stop()
-    let time = 15000 - this.score*2
-    this.timer = new Timer(time)
-    this.timer.start(this.ctx)
+    if(!this.timesUp) {
+      this.drawTimerBox(this.ctx)
+      if (this.timer) this.timer.stop()
+      let time = 5000 - this.score*2
+      this.timer = new Timer(time, this.gameOver)
+      this.timer.start(this.ctx)
+    } else {
+      this.playing = false;
+      this.highScore = Math.max(this.score, this.highScore)
+      document.querySelector("#high-score").innerHTML = this.highScore
+      this.score = 0
+      console.log(this.playing)
+    }
   }
 
   drawTimerBox(ctx) {
@@ -42,14 +75,25 @@ export default class Board {
     ctx.fillRect(Util.SIZE*Util.ROW+5, 5, Util.SIZE - 10, Util.SIZE*Util.COL - 10);
   }
 
-  togglePause(){
+  togglePause(ctx){
     if (!this.pause) {
       this.timer.pause()
+      // document.querySelector("show").classList.add("hide");
+      ctx.fillStyle = "#242c1e"; //pause color 
+      ctx.fillRect(0,0, Util.SIZE*Util.ROW, Util.SIZE*Util.COL) 
+      ctx.fillStyle ="orange"
+      ctx.font = `${Util.SIZE}px Allerta Stencil`;
+      ctx.fillText('Click Spacebar', Util.SIZE*5, Util.SIZE*3)
+      ctx.fillText('to Unpause', Util.SIZE*6, Util.SIZE*5)
     } else {
-      this.timer.unpause(this.ctx)
+      this.clearGrid()
+      this.drawPlacedPieces()
+      this.drawCurrentPiece()
+      this.timer.unpause(ctx)
     }
     
     this.pause = !this.pause
+    return this.pause
   }
   
 
@@ -58,8 +102,8 @@ export default class Board {
       let list = this.lists[i]
       if (this.checkNodes(list.head, list.tail) && list.size > 3){
         this.score += list.size*10
-        const scoreDisplay = document.querySelector("#score")
-        scoreDisplay.innerHTML = this.score
+        document.querySelector("#score").innerHTML = this.score
+        this.playing = false;
         this.animatedDeletion(list)
         list.delete()
         this.lists = this.lists.filter((list)=> {
@@ -74,14 +118,18 @@ export default class Board {
 
   animatedDeletion(list){
     let n = 0
+    let count = 0
+    let size = list.size
     list.each((pos)=>{
+      count ++
       let x, y;
       [x,y] = pos
       n++
       this.grid[x][y] = 0
-      setTimeout(()=>this.clearCell(x,y), n*50)
+      if(count === size) setTimeout(()=>this.playing = true, n*50)
+      setTimeout(()=>this.clearCell(x,y), n*30)
     })
-  }
+  } 
 
   returnEligbleNeighbors(node){
     let toDoList = []
@@ -179,14 +227,14 @@ export default class Board {
           const gridY = (this.currentPiece.y + y )
           if (cell.type !== "empty") {
             let node = new Node([gridX, gridY], cell.type, cell.rotation)
-            
             this.moveIn(node)
             this.grid[gridX][gridY] = JSON.parse(JSON.stringify(cell))
           }
         })
       })
-      this.reset()
     }
+    this.reset()
+    return true
   }
 
   validPos(){
@@ -217,6 +265,7 @@ export default class Board {
       })
     })
   }
+
   
   clearCurrentPiece() {
     this.currentPiece.pieceShapeArray.forEach((row, x)=>{
@@ -239,39 +288,77 @@ export default class Board {
       })
     })
   }
+  drawGridSquare(x,y){
+    const num = 72
+    this.ctx.fillStyle=`rgba(78,53,36,.5)`;
+    // this.ctx.fillStyle="rgba(36,44,30,.5)";
+    // this.ctx.strokeRect(0,0,x,y);
+    this.ctx.lineJoin = 'bevel';
+    this.ctx.lineWidth = Util.SIZE/20;
+    this.ctx.fillRect(x*Util.SIZE, y*Util.SIZE, Util.SIZE - Util.SIZE/10, Util.SIZE - Util.SIZE/10);
+  }
   
-  drawCell(type, rotation, x, y, status){
+  drawCell(type, rotation, x, y, status, ctx){
+    if (!ctx) ctx = this.ctx
     if (type === "corner") {
       switch (rotation) {
         case 0:
-          Types.NE(x, y, this.ctx, status);
+          Types.NE(x, y, ctx, status);
           break;
         case 3:
-          Types.SE(x, y, this.ctx, status);
+          Types.SE(x, y, ctx, status);
           break;
         case 2:
-          Types.SW(x, y, this.ctx, status);
+          Types.SW(x, y, ctx, status);
           break;
         case 1:
-          Types.NW(x, y, this.ctx, status);
+          Types.NW(x, y, ctx, status);
           break;
       }
     } else if (type === "bar") {
       switch (rotation%2) {
         case 0:
-          Types.UP(x, y, this.ctx, status);
+          Types.UP(x, y, ctx, status);
           break;
         case 1:
-          Types.SIDE(x, y, this.ctx, status);
+          Types.SIDE(x, y, ctx, status);
           break;
       }
     }
   }
+  clearGrid(){
+    this.grid.forEach((row, x)=>{
+      row.forEach((_, y)=>{
+        this.clearCell(x,y)
+      })
+    })
+  }
               
   clearCell(x, y) {
     this.ctx.clearRect(x * Util.SIZE, y * Util.SIZE, Util.SIZE, Util.SIZE)
+    this.drawGridSquare(x,y)
+    this.currentPiece.pieceShapeArray.forEach((row, i)=>{
+      row.forEach((cell, j)=>{
+        if (cell !== 0) {
+          const gridX = (this.currentPiece.x + i )
+          const gridY = (this.currentPiece.y + j )
+          if(gridX === x && gridY === y)
+          this.drawCell(cell.type, cell.rotation, gridX, gridY, "current")
+        }
+      })
+    })
   }
-
+  drawCurrentPiece() {
+    this.currentPiece.pieceShapeArray.forEach((row, x)=>{
+      row.forEach((cell, y)=>{
+        if (cell !== 0) {
+          const gridX = (this.currentPiece.x + x )
+          const gridY = (this.currentPiece.y + y )
+          this.drawCell(cell.type, cell.rotation, gridX, gridY, "current")
+        }
+      })
+    })
+  }
 
   createList(node) {
     let list = new LinkedList(node)
@@ -311,4 +398,3 @@ export default class Board {
 const checkEquality = (thing1, thing2) => {
   return JSON.stringify(thing1) === JSON.stringify(thing2);
 }
-      

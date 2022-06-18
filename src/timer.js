@@ -1,9 +1,10 @@
 import Util from "./util";
 
 export default class Timer {
-  constructor(time) {
+  constructor(time, gameover) {
     this.time = time
     this.maxTime = time
+    this.gameover = gameover
   }
 
   drawTimer(ctx){
@@ -11,13 +12,13 @@ export default class Timer {
     ctx.fillRect(Util.SIZE*Util.ROW, 0, Util.SIZE, Util.SIZE*Util.COL*((this.maxTime-this.time)/this.maxTime));
   }
 
-
   start(ctx){
     this.interval = setInterval(()=>{
       this.drawTimer(ctx)
       if (this.time < 0 ) {
         clearInterval(this.interval)
-        alert("game over")
+        this.gameover()
+        // alert("game over")
       }
       this.time -= (10)
     }, 10 )
@@ -28,10 +29,15 @@ export default class Timer {
   }
 
   pause(){
+    console.log("pause")
+
     let timeLeft = this.time
+    console.log(timeLeft)
     this.stop()
-  }
+  } 
   unpause(ctx){
+    console.log("unpause")
+    console.log(this.time)
     this.start(ctx)
     // let timeLeft = this.time
     // this.stop()
