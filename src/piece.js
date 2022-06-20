@@ -7,34 +7,58 @@ export default class Piece {
     this.x = Math.floor(Util.ROW / 2 - 1)
     this.y = Math.floor(Util.COL / 2 - 1)
     this.moveLeft = this.moveLeft.bind(this)
-    if (!name) name = this.getRandomShape()
+    if (!name) name = this.getRandomShape('demo')
     this.pieceShapeArray = this.buildpieceShapeArray(name)
   }
   // //for testing
-  // getRandomShape() { 
+  // getRandomShape('demo') { 
   //  let hardShapes = [ `uShape`]
   //  let rando = Math.floor(Math.random()*1000)
   //        rando = (rando % hardShapes.length)
   //     return hardShapes[rando]
   // }
-  getRandomShape() {
+  getRandomShape(level) {
     let basicShapes = [ `shortCorner`,`shortLine` ]
     let easyShapes =  [ `tallCorner`,`ohm`, `uShape` ]
     let mediumShapes = [ `leftZee`,`rightZee`,`leftEle`, `rightEle`,`tallLine` ]
     let hardShapes = [ `waitWhat`,`tallZee`]
     let rando = Math.floor(Math.random()*1000)
-    if (rando < 500 ){
-      rando = (rando % basicShapes.length)
-      return basicShapes[rando]
-    } else if (rando < 750) {
-      rando = (rando % easyShapes.length)
-      return easyShapes[rando]
-    } else if ( rando < 955) {
-      rando = (rando % mediumShapes.length)
-      return mediumShapes[rando]
+    if (level === 'demo') {
+      if (rando < 600 ) {
+        rando = (rando % basicShapes.length)
+        return basicShapes[rando]
+      } else if (rando < 950) {
+        rando = (rando % easyShapes.length)
+        return easyShapes[rando] 
+      } else {
+        rando = (rando % mediumShapes.length)
+        return mediumShapes[rando]
+      }
+    } else if (level === 'beginner') {
+      if (rando < 500 ) {
+        rando = (rando % basicShapes.length)
+        return basicShapes[rando]
+      } else if (rando < 850) {
+        rando = (rando % easyShapes.length)
+        return easyShapes[rando] 
+      } else {
+        rando = (rando % mediumShapes.length)
+        return mediumShapes[rando]
+      }
     } else {
-      rando = (rando % hardShapes.length)
-      return hardShapes[rando]
+      if (rando < 400 ){
+        rando = (rando % basicShapes.length)
+        return basicShapes[rando]
+      } else if (rando < 650) {
+        rando = (rando % easyShapes.length)
+        return easyShapes[rando]
+      } else if ( rando < 950) {
+        rando = (rando % mediumShapes.length)
+        return mediumShapes[rando]
+      } else {
+        rando = (rando % hardShapes.length)
+        return hardShapes[rando]
+      }
     }
   }
 
