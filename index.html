@@ -14,21 +14,23 @@
     <link rel="icon" href="favico.svg" /> 
   </head>
   <body id="body">
-    
     <div class="container"> 
+      <audio id="music" loop>
+        <source src="play.mp3" type="audio/mpeg"/>
+      </audio>
       <!-- Modal -->
       <div id="opening" >
         <div class="btn" id="start">Click to Start</div>
         <div class="btn-box">
-          <div class="btn" id="demo">Demo</div>
+          <div class="btn selected" id="demo">Easy</div>
           <div class="btn" id="beginner">Beginner</div>
           <div class="btn" id="pro">Pro</div>
         </div>
-        <!-- <div class="btn-box">
-          <div class="btn" id="demo">Sound On</div>
-          <div class="btn" id="beginner">Sound Off</div>
+        <div class="btn-box">
+          <div class="btn" id="soundon">Sound On</div>
+          <div class="btn selected" id="soundoff">Sound Off</div>
 
-        </div> -->
+        </div>
       </div>
 
       <!-- end Modal -->

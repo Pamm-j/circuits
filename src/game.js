@@ -60,11 +60,23 @@ export default class Circuits {
     const demo = document.getElementById('demo');
     const beginner = document.getElementById('beginner');
     const pro = document.getElementById('pro');
-
+    
     demo.addEventListener("click", ()=>this.handleLevel("demo", demo, [beginner, pro])) 
     beginner.addEventListener("click", ()=>this.handleLevel("beginner", beginner, [demo, pro])) 
     pro.addEventListener("click", ()=>this.handleLevel("pro", pro, [demo, beginner])) 
-
+    
+    const soundon = document.getElementById('soundon');
+    const soundoff = document.getElementById('soundoff');
+    soundon.addEventListener("click", ()=> {
+      board.sound = true 
+      soundon.classList.add("selected");
+      soundoff.classList.remove("selected")
+    }) 
+    soundoff.addEventListener("click", ()=> {
+      board.sound = false
+      soundoff.classList.add("selected");
+      soundon.classList.remove("selected")
+    }) 
   }
 
   
@@ -78,6 +90,7 @@ export default class Circuits {
     board.drawNextPiece()
     board.drawCurrentPiece()
     board.resetTimer()
+    if (board.sound) document.getElementById('music').play();
     // board.reset()
 
   }
