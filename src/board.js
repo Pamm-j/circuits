@@ -8,6 +8,7 @@ import Timer from "./timer"
 export default class Board {
   constructor (ctx, smallctx) {
     this.level = 'demo';
+    this.sound = false;
     this.maxTime = 15000;
     this.grid = this.buildGrid();
     this.score = 0;
