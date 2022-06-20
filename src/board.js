@@ -7,26 +7,28 @@ import Timer from "./timer"
 
 export default class Board {
   constructor (ctx, smallctx) {
-    this.maxTime = 15000
+    this.level = 'demo';
+    this.maxTime = 15000;
     this.grid = this.buildGrid();
     this.score = 0;
     this.ctx = ctx;
     this.smallctx = smallctx;
     this.lists = [];
     this.currentPiece = new Piece();
-    this.currentPiece = new Piece(this.nextPiece)
-    this.nextPiece = this.currentPiece.getRandomShape()
+    this.currentPiece = new Piece(this.nextPiece);
+    this.nextPiece = this.currentPiece.getRandomShape(this.level);
     this.pause = false;
     this.playing = false;
-    this.gameOver = this.gameOver.bind(this)
+    this.gameOver = this.gameOver.bind(this);
     this.timesUp = false;
     this.highScore;
   }
 
   changePiece(){
     const toBeDrawn = this.nextPiece 
-    this.nextPiece = this.currentPiece.getRandomShape()
+    this.nextPiece = this.currentPiece.getRandomShape(this.level)
     this.currentPiece = new Piece(toBeDrawn)
+    console.log(this.level)
   }
 
   drawNextPiece(){
@@ -129,7 +131,13 @@ export default class Board {
     for(let i = 0; i < this.lists.length; i++) {
       let list = this.lists[i]
       if (this.checkNodes(list.head, list.tail) && list.size > 3){
-        this.score += list.size*10
+        if (this.level === 'demo') {
+          this.score += list.size
+        } else if (this.level === 'beginner') {
+          this.score += list.size * 4
+        } else {
+          this.score += list.size*10
+        }
         document.querySelector("#score").innerHTML = this.score
         this.playing = false;
         this.animatedDeletion(list)

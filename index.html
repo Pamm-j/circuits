@@ -14,14 +14,30 @@
     <link rel="icon" href="favico.svg" /> 
   </head>
   <body id="body">
-      
-    <div class="container"> 
     
+    <div class="container"> 
+      <!-- Modal -->
+      <div id="opening" >
+        <div class="btn" id="start">Click to Start</div>
+        <div class="btn-box">
+          <div class="btn" id="demo">Demo</div>
+          <div class="btn" id="beginner">Beginner</div>
+          <div class="btn" id="pro">Pro</div>
+        </div>
+        <!-- <div class="btn-box">
+          <div class="btn" id="demo">Sound On</div>
+          <div class="btn" id="beginner">Sound Off</div>
+
+        </div> -->
+      </div>
+
+      <!-- end Modal -->
+      
       <h1 class="title">Circuits</h1>
       <h3 id="story">Complete the Circuits before the time runs out!</h3>
+      <div class="levels"></div>
       <canvas id="work-bench" class="show"></canvas>
 
-      <div id="opening">Click to Start</div>
       <div class="sub-container show" > 
         <a></a><div class="info">
           <div class="score-box">

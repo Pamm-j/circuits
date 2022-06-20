@@ -37,6 +37,12 @@ export default class Circuits {
     }
   } 
 
+  handleLevel(type, element, others){
+    others.filter((el)=> el !== element).forEach(lev => lev.classList.remove('selected'))
+    element.classList.add('selected')
+    board.level = type    
+  }
+
   play() {
     board = new Board(this.ctx, this.smallctx)
     let localHighScore = localStorage.getItem("highScore") 
@@ -48,10 +54,20 @@ export default class Circuits {
       highScoreDiv = 0
       board.highScore = 0
     }
-    const canvas = document.getElementById('work-bench');
-    canvas.addEventListener("click", this.start, {once:true}) 
+    const start = document.getElementById('start');
+    start.addEventListener("click",()=>setTimeout(this.start, 100) , {once:true}) 
+    
+    const demo = document.getElementById('demo');
+    const beginner = document.getElementById('beginner');
+    const pro = document.getElementById('pro');
+
+    demo.addEventListener("click", ()=>this.handleLevel("demo", demo, [beginner, pro])) 
+    beginner.addEventListener("click", ()=>this.handleLevel("beginner", beginner, [demo, pro])) 
+    pro.addEventListener("click", ()=>this.handleLevel("pro", pro, [demo, beginner])) 
+
   }
 
+  
   
   start(){
     board.playing = true;
